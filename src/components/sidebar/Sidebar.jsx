@@ -8,9 +8,7 @@ import InsertChartIcon from "@mui/icons-material/InsertChart";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
+import TheatersIcon from '@mui/icons-material/Theaters';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import { Link } from "react-router-dom";
@@ -49,16 +47,28 @@ const Sidebar = () => {
               <span>Movies</span>
             </li>
           </Link>
-          <li>
-            <CreditCardIcon className="icon" />
-            <span>Orders</span>
-          </li>
+          <Link to="/calendar" style={{ textDecoration: "none" }}>
+            <li>
+              <CalendarMonthIcon className="icon" />
+              <span>Calendar</span>
+            </li>
+          </Link>
+       
+          <Link to="/orders" style={{ textDecoration: "none" }}>
+            <li>
+              <CreditCardIcon className="icon" />
+              <span>Orders</span>
+            </li>
+          </Link>
+          <Link to="/cinemas" style={{ textDecoration: "none" }}>
+            <li>
+              <TheatersIcon className="icon" />
+              <span>Cinemas</span>
+            </li>
+          </Link>
           
           <p className="title">Analys</p>
-          <li>
-            <CalendarMonthIcon className="icon" />
-            <span>Calendar</span>
-          </li>
+          
           <li>
             <InsertChartIcon className="icon" />
             <span>Stats</span>
