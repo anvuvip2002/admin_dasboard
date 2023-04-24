@@ -1,5 +1,5 @@
-import { movieValue } from '../src/App'
-import useGet from "../src/api/get"
+
+
 //import { userRows } from './datatablesource_users';
 export const userColumns = [
   { field: "id", headerName: "ID", width: 70 },

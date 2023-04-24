@@ -1,10 +1,10 @@
 import "./datatable.scss";
-import Axios from 'axios'
+
 import { DataGrid } from "@mui/x-data-grid";
 import { userColumns} from "../../../datatablesource_movies";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useQuery } from "react-query";
+
 import { userRows } from "../../../App";
 const Datatable_movie = () => {
  
