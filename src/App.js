@@ -14,6 +14,7 @@ import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 
 import React from "react";
 import EditCinemas from "./pages/cinema/EditCinemas";
+import NewCinemas from "./pages/cinema/NewCinemas";
 
 export const userRows = [];
 export const cinemaRows = [];
@@ -52,6 +53,7 @@ function App() {
             </Route>
             <Route path="cinemas">
               <Route index element={<List_cinemas />} />
+              <Route path="new" element={<NewCinemas />} />
               <Route path=":id/edit" element={<EditCinemas />} />
             </Route>
           </Route>

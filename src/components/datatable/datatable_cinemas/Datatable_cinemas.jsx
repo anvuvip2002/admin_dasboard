@@ -11,9 +11,12 @@ const Datatable_cinemas = () => {
   const handleAction = (id) => {
     const index = data.findIndex((item) => item.id === id);
     if (index !== -1) {
-      const newData = [...data]; 
-      newData[index].isActive = !newData[index].isActive; 
-      setData(newData); 
+      const confirmed = window.confirm("Are you sure you want to change the active status?");
+      if (confirmed) {
+        const newData = [...data];
+        newData[index].isActive = !newData[index].isActive;
+        setData(newData);
+      }
     }
   };
   const actionColumn = [
@@ -24,9 +27,9 @@ const Datatable_cinemas = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <button onClick={() => handleAction(params.row.id)} >{params.row.isActive ? "🔒": "🔓"}</button>
-            <Link to={`${params.row.id}/edit`} style={{ textDecoration: "none" }}>
-              <div className="viewButton">Edit</div>
+            <button className="activeButton" onClick={() => handleAction(params.row.id)} >{params.row.isActive ? "🔒": "🔓"}</button>
+            <Link className="editButton" to={`${params.row.id}/edit`} style={{ textDecoration: "none" }}>
+              Edit
             </Link>
           </div>
         );
