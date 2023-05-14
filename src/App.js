@@ -10,10 +10,13 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import List_user from "./pages/list/list_users/List_user";
 import List_movie from "./pages/list/list_movies/List_movie";
+import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 
 import React from "react";
+import EditCinemas from "./pages/cinema/EditCinemas";
 
 export const userRows = [];
+export const cinemaRows = [];
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -47,8 +50,10 @@ function App() {
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
             </Route>
-            
-         
+            <Route path="cinemas">
+              <Route index element={<List_cinemas />} />
+              <Route path=":id/edit" element={<EditCinemas />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
