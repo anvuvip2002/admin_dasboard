@@ -1,4 +1,4 @@
-export const userColumns = [
+export const orderColumns = [
     { field: "id", headerName: "ID", width: 70 },
     {
       field: "moviename",
@@ -63,7 +63,7 @@ export const userColumns = [
   ];
   
   //temporary data
-  export const userRows = [
+  export const orderRows = [
     {
       id: 1,
       moviename: "Doctor Strange",
