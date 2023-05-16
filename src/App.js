@@ -11,9 +11,9 @@ import { DarkModeContext } from "./context/darkModeContext";
 import List_user from "./pages/list/list_users/List_user";
 import List_movie from "./pages/list/list_movies/List_movie";
 import List_order from "./pages/order/List_order";
-
+import Calendar from "./components/calendar/Calendar";
 import React from "react";
-
+import MakeCalendar from "./pages/calendars/makeCalendar";
 export const userRows = [];
 
 function App() {
@@ -47,6 +47,11 @@ function App() {
                 path="new"
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
+            </Route>
+            <Route path="calendar">
+              <Route index element={<MakeCalendar />} />
+             
+             
             </Route>
             
          
