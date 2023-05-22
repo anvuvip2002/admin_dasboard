@@ -13,7 +13,7 @@ import List_movie from "./pages/list/list_movies/List_movie";
 
 import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 
-import React from "react";
+
 import EditCinemas from "./pages/cinema/EditCinemas";
 import NewCinemas from "./pages/cinema/NewCinemas";
 
@@ -70,9 +70,15 @@ function App() {
              
              
             </Route>
-            
+            <Route path="orders">
+              <Route index element={<List_order />} />
+              <Route path=":userId" element={<Single />} />
+              <Route
+                path="new"
+                element={<New inputs={userInputs} title="Order's Details" />}
+              />
+            </Route>
          
-
           </Route>
         </Routes>
       </BrowserRouter>
