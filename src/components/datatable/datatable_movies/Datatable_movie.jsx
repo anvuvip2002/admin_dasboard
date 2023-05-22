@@ -24,7 +24,7 @@ const Datatable_movie = () => {
         return (
           <div className="cellAction">
             <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
+              <div className="viewButton">View Movie</div>
             </Link>
             <div
               className="deleteButton"
