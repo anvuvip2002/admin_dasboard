@@ -36,9 +36,9 @@ const Datatable_order = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New Order
+        Order's Details
         <Link to="/orders/new" className="link">
-          Add New
+          
         </Link>
       </div>
       <DataGrid

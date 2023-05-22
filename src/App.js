@@ -49,6 +49,14 @@ function App() {
               />
             </Route>
             
+            <Route path="orders">
+              <Route index element={<List_order />} />
+              <Route path=":orderId" element={<Single />} />
+              <Route
+                path="new"
+                element={<New inputs={userInputs} title="Details order" />}
+              />
+            </Route>
          
           </Route>
         </Routes>

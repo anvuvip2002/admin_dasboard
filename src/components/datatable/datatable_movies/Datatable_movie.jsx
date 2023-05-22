@@ -1,15 +1,15 @@
 import "./datatable.scss";
 
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns} from "../../../datatablesource_movies";
+import { userColumns } from "../../../datatablesource_movies";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import { userRows } from "../../../App";
 const Datatable_movie = () => {
- 
+
   const [data, setData] = useState(userRows);
-  
+
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -53,7 +53,7 @@ const Datatable_movie = () => {
         rowsPerPageOptions={[9]}
         checkboxSelection
       />
-     
+
     </div>
   );
 };
