@@ -13,7 +13,7 @@ import List_movie from "./pages/list/list_movies/List_movie";
 
 import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 
-import React from "react";
+
 import EditCinemas from "./pages/cinema/EditCinemas";
 import NewCinemas from "./pages/cinema/NewCinemas";
 
