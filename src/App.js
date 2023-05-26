@@ -70,9 +70,15 @@ function App() {
              
              
             </Route>
-            
+            <Route path="orders">
+              <Route index element={<List_order />} />
+              <Route path=":userId" element={<Single />} />
+              <Route
+                path="new"
+                element={<New inputs={userInputs} title="Order's Details" />}
+              />
+            </Route>
          
-
           </Route>
         </Routes>
       </BrowserRouter>

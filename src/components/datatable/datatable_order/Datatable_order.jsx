@@ -1,6 +1,6 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { orderColumns, orderRows } from "../../../datatablesource_orders.js";
+import { orderColumns,orderRows } from "../../../datatablesource_order.js";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ const Datatable_order = () => {
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
-  };
+  }; 
 
   const actionColumn = [
     {
@@ -19,7 +19,7 @@ const Datatable_order = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/orders/test" style={{ textDecoration: "none" }}>
+            <Link to="/users/test" style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
             <div
@@ -36,9 +36,9 @@ const Datatable_order = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Order's Details
-        <Link to="/orders/new" className="link">
-          
+        Add New User
+        <Link to="/users/new" className="link">
+          Add New
         </Link>
       </div>
       <DataGrid

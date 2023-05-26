@@ -1,6 +1,11 @@
 
 
 
+
+
+import { DataGrid } from "@mui/x-data-grid";
+import { userColumns } from "../../../datatablesource_movies";
+
 import { Link } from "react-router-dom";
 
 import Table from '@mui/material/Table';
@@ -19,7 +24,13 @@ import Button from 'react-bootstrap/Button';
 import ReactPaginate from "react-paginate";
 
 const Datatable_movie = () => {
+
  
+
+
+  const [data, setData] = useState(userRows);
+
+
 
 
 
@@ -170,7 +181,11 @@ const Datatable_movie = () => {
         activeClassName={styles.active}
        
       />
+
       </div>
+
+
+
     </div>
   );
 };
