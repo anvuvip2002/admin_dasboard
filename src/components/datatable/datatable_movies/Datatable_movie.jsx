@@ -25,14 +25,6 @@ import ReactPaginate from "react-paginate";
 
 const Datatable_movie = () => {
 
- 
-
-
-  const [data, setData] = useState(userRows);
-
-
-
-
 
   const [tableDataSVT, setTableDataSVT] = useState([]);
 
