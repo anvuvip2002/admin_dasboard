@@ -72,9 +72,9 @@ const Datatable_user = () => {
     <div className={styles.servicePage}>
       <div className={styles.datatable}>
         <div className={styles.datatableTitle}>
-          <b>Danh Sách Phim</b>
-          <Link to="/*" className={styles.link}>
-            Thêm Phim
+          <b>Danh Sách Người Dùng</b>
+          <Link to="/users/new" className={styles.link}>
+            Thêm Mới
           </Link>
         </div>
 
