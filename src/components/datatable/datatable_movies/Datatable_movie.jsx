@@ -19,8 +19,6 @@ import Button from 'react-bootstrap/Button';
 import ReactPaginate from "react-paginate";
 
 const Datatable_movie = () => {
- 
-
 
 
   const [tableDataSVT, setTableDataSVT] = useState([]);
