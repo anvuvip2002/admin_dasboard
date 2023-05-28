@@ -126,13 +126,7 @@ const Calendar = () => {
     // });
   };
 
-  useEffect(() => {
-    loadProvince();
-    //loadCinema();
-    loadMovie();
-  }, []);
-  useEffect(() => {
-    //data tao showtime
+  const handleAddShowTimes = (event) => {
     if (showtimes && Object.keys(showtimes?.showtimes).length > 0) {
       const roomShowtimes = {};
       for (let room of Object.keys(showtimes.showtimes)) {
@@ -140,14 +134,56 @@ const Calendar = () => {
           (showtime) => showtime.movie.id
         );
       }
-      const showtimesCreate = {
-        date: showtimes.date,
-        cinemaId: showtimes.cinema.id,
-        roomShowtimes: roomShowtimes,
-      };
-      console.log(JSON.stringify(showtimesCreate));
+      // const showtimesCreate = {
+      //   date: showtimes.date,
+      //   cinemaId: showtimes.cinema.id,
+      //   roomShowtimes: roomShowtimes,
+      // };
+      // console.log(JSON.stringify(showtimesCreate));
+      event.preventDefault();
+  
+      try {
+        const response = axios.post('http://20.214.254.141:3000/showtime', {
+          date: showtimes.date,
+          cinemaId: showtimes.cinema.id + "",
+          roomShowtimes: roomShowtimes,
+        } );
+
+
+          
+        
+      } catch (error) {
+        console.error(error);
+        // console.log(selected);
+        // console.log(selected.map(genre => genre.value));
     }
-  }, [showtimes]);
+
+    }
+    console.log("hihi")
+  }
+
+  useEffect(() => {
+    loadProvince();
+    //loadCinema();
+    loadMovie();
+  }, []);
+  // useEffect(() => {
+  //  // data tao showtime
+  //   if (showtimes && Object.keys(showtimes?.showtimes).length > 0) {
+  //     const roomShowtimes = {};
+  //     for (let room of Object.keys(showtimes.showtimes)) {
+  //       roomShowtimes[room] = showtimes.showtimes[room].map(
+  //         (showtime) => showtime.movie.id
+  //       );
+  //     }
+  //     const showtimesCreate = {
+  //       date: showtimes.date,
+  //       cinemaId: showtimes.cinema.id,
+  //       roomShowtimes: roomShowtimes,
+  //     };
+  //     console.log(JSON.stringify(showtimesCreate));
+  //   }
+  // }, [showtimes]);
   ////////////
   return (
     <div>
@@ -212,17 +248,7 @@ const Calendar = () => {
                 value={selected}
                 onChange={setSelected}
               />
-              {/* <Select
-                labelId="demo-simple-select-required-label"
-                id="demo-simple-select-required"
-                label="Movie *"
-                onChange={handleChangeMovie}
-              >
-                {movie.length > 0 &&
-                  movie.map((movie, index) => (
-                    <MenuItem value={movie.id}>{movie.name}</MenuItem>
-                  ))}
-              </Select> */}
+              
               <FormHelperText>Required</FormHelperText>
             </FormControl>
           </div>
@@ -240,16 +266,27 @@ const Calendar = () => {
             <div className={styles.buttonUpdate}>
               <button
                 type="submit"
-                // onClick={handleSubmit}
+                
+                className={styles.myButton}
+              >
+                Tạo
+              </button>
+              
+            </div>
+            
+          </div>
+        </div>
+      </form>
+      <div className={styles.buttonUpdate}>
+              <button
+                type="submit"
+                onClick={handleAddShowTimes}
                 className={styles.myButton}
               >
                 Thêm
               </button>
-            </div>
-          </div>
-        </div>
-      </form>
-
+              
+            </div> 
       <div className={styles.servicePage}>
         <div className={styles.datatable}>
           <div className={styles.datatableTitle}>
