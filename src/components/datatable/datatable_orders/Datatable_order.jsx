@@ -1,15 +1,11 @@
 import "./datatable.scss";
-
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns} from "../../../datatablesource_movies";
+import { orderColumns, orderRows } from "../../../datatablesource_orders.js";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-import { userRows } from "../../../App";
-const Datatable_movie = () => {
- 
-  const [data, setData] = useState(userRows);
-  
+const Datatable_order = () => {
+  const [data, setData] = useState(orderRows);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -23,8 +19,8 @@ const Datatable_movie = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View Movie</div>
+            <Link to="/orders/test" style={{ textDecoration: "none" }}>
+              <div className="viewButton">View</div>
             </Link>
             <div
               className="deleteButton"
@@ -40,22 +36,21 @@ const Datatable_movie = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New Movie
-        <Link to="/users/new" className="link">
+        Add New Order
+        <Link to="/orders/new" className="link">
           Add New
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={userColumns.concat(actionColumn)}
+        columns={orderColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
       />
-     
     </div>
   );
 };
 
-export default Datatable_movie;
+export default Datatable_order;

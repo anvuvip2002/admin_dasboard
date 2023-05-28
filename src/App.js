@@ -10,11 +10,18 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import List_user from "./pages/list/list_users/List_user";
 import List_movie from "./pages/list/list_movies/List_movie";
+
 import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 
 import React from "react";
 import EditCinemas from "./pages/cinema/EditCinemas";
 import NewCinemas from "./pages/cinema/NewCinemas";
+
+
+import List_order from "./pages/order/List_order";
+import Calendar from "./components/calendar/Calendar";
+import React from "react";
+import MakeCalendar from "./pages/calendars/makeCalendar";
 
 export const userRows = [];
 export const cinemaRows = [];
@@ -51,11 +58,21 @@ function App() {
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
             </Route>
+
             <Route path="cinemas">
               <Route index element={<List_cinemas />} />
               <Route path="new" element={<NewCinemas />} />
               <Route path=":id/edit" element={<EditCinemas />} />
             </Route>
+
+            <Route path="calendar">
+              <Route index element={<MakeCalendar />} />
+             
+             
+            </Route>
+            
+         
+
           </Route>
         </Routes>
       </BrowserRouter>
