@@ -1,160 +1,284 @@
-import { useState } from "react";
-import { formatDate } from '@fullcalendar/core';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from "@fullcalendar/list";
-import { v4 as uuid } from "uuid";
+import * as React from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import styles from './Calendar.module.css'
+import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import { makeStyles } from "@mui/styles";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import axios from 'axios';
 
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { tokens } from "../../theme";
+import { useState, useEffect } from 'react';
+const useStyles = makeStyles({
+  paper: {
+    overflowX: "scroll",
+    width: "250px",
+    overflowY:"scroll",
+
+  }
+});
+const Calendar = () => {
+
+  const classes = useStyles();
+  const MenuProps = {
+    autoFocus: false
+  };
+  const [age, setAge] = React.useState('');
+  
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
 
-const EventItem = ({ info }) => {
-  const { event } = info;
+  //Province
+  const [province, setProvince] = useState();
+  const [provinceSelected, setProvinceSelected] = useState();
+
+  const loadProvince = async () => {
+    axios
+      .get('http://20.214.254.141:3000/province?filter=notnull')
+      .then((response) => {
+        setProvince(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const [listProvince, setListProvince] = React.useState('');
+  
+  const handleChangeProvince = (event) => {
+    if (province.data.length===0 || !province.data)
+    return
+    const curProvince = province?.data?.filter(item =>item.id === event.target.value)[0]
+    setProvinceSelected(curProvince);
+
+  };
+/////
+  //Cinema
+
+  const [listCinema, setListCinema] = React.useState('');
+  const handleChangeCinema = (event) => {
+    setListCinema(event.target.value);
+  };
+
+///////
+ // Movie
+  const [movie, setMovie] = useState([]);
+
+
+  const loadMovie = async () => {
+    axios
+      .get('http://20.214.254.141:3000/movie')
+      .then((response) => {
+        setMovie(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const [listMovie, setListMovie] = React.useState('');
+  const handleChangeMovie = (event) => {
+    setListMovie(event.target.value);
+  };
+
+
+/////////
+  const [tableDataSVT, setTableDataSVT] = useState([]);
+
+  //Pagination
+  const [svtPerPage, setSvtPerPage] = useState(7)
+  const [CsvtPerPage, setCSvtPerPage] = useState(1)
+  const numOfToTalPages = Math.ceil(tableDataSVT.data?.length / svtPerPage);
+  // const pages = [...Array(numOfToTalPages + 1).keys()].slice(1);
+  const indexOfLastSVT = CsvtPerPage*svtPerPage;
+  const indexOfFirstSVT = indexOfLastSVT - svtPerPage;
+  const visibleSVT = tableDataSVT.data?.slice(indexOfFirstSVT, indexOfLastSVT)
+
+  
+
+  const changePage = ({ selected }) => {
+    setCSvtPerPage(selected + 1);
+  };
+
+  useEffect(() => {
+    loadProvince();
+    //loadCinema();
+    loadMovie();
+  }, []);
+////////////
   return (
     <div>
-      <p>{event.title}</p>
-      <p>{event.extendedProps.cinema}</p>
-      {/* <p>{event.extendedProps.cinema}</p> */}
-    </div>
-  );
-};
-
-const Calendar = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [currentEvents, setCurrentEvents] = useState([]);
-
-  const handleDateClick = (selected) => {
-    const title = prompt("Please enter a movie for this date");
-    const cinemaName = prompt("Please enter a cinema for this movie");
-    const calendarApi = selected.view.calendar;
-    calendarApi.unselect();
-
-    if (title) {
-      calendarApi.addEvent({
-        id:  uuid(),
-        title,
-        
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: selected.allDay,
-        extendedProps: {
-          cinema: cinemaName
-
-        },
-      });
-    }
-  };
-
-  const handleEventClick = (selected) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
-      )
-    ) {
-      selected.event.remove();
-    }
-  };
-
-  return (
-    <Box m="20px">
-      {/* <Header title="Calendar" subtitle="Full Calendar Interactive Page" /> */}
-
-      <Box display="flex" justifyContent="space-between">
-        {/* CALENDAR SIDEBAR */}
-        <Box
-          flex="1 1 20%"
-          backgroundColor={colors.primary[400]}
-          p="15px"
-          borderRadius="4px"
+    <div style={{display:"flex", margin:"20px"}}>
+      <div style={{marginRight:"45px"}}>
+      <FormControl required sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-required-label">Tỉnh</InputLabel>
+        <Select
+          MenuProps={{
+            ...MenuProps,
+            classes: {
+              paper: classes.paper
+            }
+          }}
+          labelId="demo-simple-select-required-label"
+          id="demo-simple-select-required"
+          
+          label="listProvince *"
+          onChange={handleChangeProvince}
         >
-          <Typography variant="h5">Movies</Typography>
-          <List>
-            {currentEvents.map((event) => (
-              <ListItem
-                key={event.id}
-                sx={{
-                  backgroundColor: colors.greenAccent[500],
-                  margin: "10px 0",
-                  borderRadius: "2px",
-                }}
-              >
-                <ListItemText
-                  primary={event.title}
-                  
-                  secondary={
-                    
-                    <Typography>
-                      
-                      {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                      
-                    </Typography>
-                  }
-                />
-                
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+         
+          {province?.data?.length > 0 && province?.data?.map((province, index) => (
+            <MenuItem value={province.id}>{province.name}</MenuItem>
+               
+          ))}
 
-        {/* CALENDAR */}
-        <Box flex="1 1 100%" ml="15px">
-          <FullCalendar
-            height="75vh"
-            // event={eventMovie}
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              interactionPlugin,
-              listPlugin,
-            ]}
-            headerToolbar={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-            }}
-            initialView="dayGridMonth"
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            select={handleDateClick}
-            eventClick={handleEventClick}
-            eventsSet={(events) => setCurrentEvents(events)} show only title
-            eventContent={(events) => <EventItem info={events} />}
-            initialEvents={[
-              {
-                id: "12315",
-                title: "All-day event",
-                date: "2022-09-14",
-                movie: "John Wick",
-                cinema: "C1"
-              },
-              {
-                id: "5123",
-                title: "Timed event",
-                date: "2023-09-28",
+        </Select>
+        <FormHelperText>Required</FormHelperText>
+      </FormControl>
+
+
+      <FormControl required sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-required-label">Rạp</InputLabel>
+        <Select
+          labelId="demo-simple-select-required-label"
+          id="demo-simple-select-required"
+          
+          maxMenuHeight={250}
+          label="listCinema *"
+          onChange={handleChangeCinema}
+        >
+           {provinceSelected?.cinemas?.length > 0 && provinceSelected?.cinemas?.map((cinema, index) => (
+            <MenuItem value={cinema.id}>{cinema.name}</MenuItem>
+               
+          ))}
+         
+        </Select>
+        <FormHelperText>Required</FormHelperText>
+      </FormControl>
+
+
+      <FormControl required sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-required-label">Phim</InputLabel>
+        <Select
+          labelId="demo-simple-select-required-label"
+          id="demo-simple-select-required"
+          
+          label="Movie *"
+          onChange={handleChangeMovie}
+        >
+          {movie.length > 0 && movie.map((movie, index) => (
+            <MenuItem value={movie.id}>{movie.name}</MenuItem>
+               
+          ))}
+        </Select>
+        <FormHelperText>Required</FormHelperText>
+      </FormControl>
+      </div>
+      <div  style={{display:"flex", justifyContent:"center", float:"right"}}>
+        <div className={styles.myDate}>
+          <label>Ngày Chiếu</label>
+          <input
+            type="date"
+            name="releaseDate"/>
+        </div>
+        <div className={styles.buttonUpdate}>
+        <button
+                type="submit"
+                // onClick={handleSubmit}
+                className={styles.myButton}
+              >
+                Thêm
+              </button>
+        </div>
+      </div>
+      
+    </div>
+    <div className={styles.servicePage}>
+      <div className={styles.datatable}>
+        <div className={styles.datatableTitle}>
+          <b>Danh Sách Lịch Chiếu Từng Rạp</b>
+        </div>
+
+        <TableContainer component={Paper} className={styles.table}>
+          <Table sx={{ minWidth: 650 }} aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+              <TableCell className={styles.tableCell + ' text-center'}>
+                  STT
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Rạp 1
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Rạp 2
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Rạp 3
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Rạp 4
+                </TableCell>{' '}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {visibleSVT?.length > 0 && visibleSVT?.map((tableDataSVT, index) => (
                 
-              },
-            ]}
-          />
-        </Box>
-      </Box>
-    </Box>
+                <TableRow
+                  key={tableDataSVT.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {index + 1}
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'} style={{display:"flex"}}>
+                    {tableDataSVT.name}
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {tableDataSVT.email}
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {tableDataSVT.phone} 
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {tableDataSVT.birthDay} 
+                  </TableCell>{' '}
+                  
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      
+        <ReactPaginate
+        previousLabel={"Prev"}
+        nextLabel={"Next"}
+        pageCount={numOfToTalPages}
+        onPageChange={changePage}
+        containerClassName={styles.myContainerPagination}
+        pageClassName={styles.pageItem}
+        pageLinkClassName={styles.pageLink}
+        previousClassName={styles.pageItem}
+        previousLinkClassName={styles.pageLink} 
+        nextClassName={styles.pageItem}
+        nextLinkClassName={styles.pageLink}
+        breakClassName={styles.pageItem}
+        breakLinkClassName={styles.pageLink}
+        activeClassName={styles.active}
+       
+      />
+      </div>
+    </div>
+    </div>
   );
 };
 
