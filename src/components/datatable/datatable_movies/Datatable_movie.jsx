@@ -56,15 +56,18 @@ const Datatable_movie = () => {
   };
 
   function deleteSVT(id) {
-    fetch(`http://localhost:3001/serviceType/svtid/${id}`, {
+    fetch(`http://20.214.254.141:3000/movie/${id}`, {
       method: 'DELETE',
     }).then((result) => {
       result.json().then((resp) => {
         console.warn(resp);
       });
+      loadSVT();
     });
-    loadSVT();
+    
   }
+
+ 
 
   return (
     <div className={styles.servicePage}>
@@ -134,7 +137,7 @@ const Datatable_movie = () => {
                         <div className={styles.viewButton}>Edit</div>
                       </Link>{' '} */}
                       <Button
-                        onClick={() => deleteSVT(tableDataSVT.svt_id)}
+                        onClick={() => deleteSVT(tableDataSVT.id)}
                         className={styles.deleteButton}
                       >
                         Delete

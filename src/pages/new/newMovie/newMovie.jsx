@@ -26,9 +26,9 @@ const NewMovie = ({  title }) => {
   const [selected, setSelected] = useState([]);
 
   
-  const navigateToServicePage = () => {
+  const navigateToMoviePage = () => {
     // 👇️ navigate to /contacts
-    navigate('/service');
+    navigate('/products');
   };
   const handleSubmit = async (e) => {
         e.preventDefault();
@@ -66,6 +66,7 @@ const NewMovie = ({  title }) => {
         // console.log(selected);
         // console.log(selected.map(genre => genre.value));
     }
+    navigateToMoviePage();
     console.log();
     
   };
