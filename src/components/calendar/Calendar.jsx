@@ -5,8 +5,6 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import styles from "./Calendar.module.css";
-import { Link } from "react-router-dom";
-import ReactPaginate from "react-paginate";
 import { makeStyles } from "@mui/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -26,18 +24,17 @@ const useStyles = makeStyles({
     overflowY: "scroll",
   },
 });
+
+
 const Calendar = () => {
   const classes = useStyles();
   const MenuProps = {
     autoFocus: false,
   };
-  const [age, setAge] = React.useState("");
-  const [showtimes, setShowtimes] = React.useState();
-  const [selected, setSelected] = useState([]);
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const [showtimes, setShowtimes] = React.useState();
+
+
 
   //Province
   const [province, setProvince] = useState();
@@ -54,7 +51,7 @@ const Calendar = () => {
         console.log(error);
       });
   };
-  const [listProvince, setListProvince] = React.useState("");
+
 
   const handleChangeProvince = (event) => {
     if (province.data.length === 0 || !province.data) return;
@@ -86,26 +83,11 @@ const Calendar = () => {
         console.log(error);
       });
   };
-  const [listMovie, setListMovie] = React.useState("");
-  const handleChangeMovie = (event) => {
-    setListMovie(event.target.value);
-  };
+  const [selected, setSelected] = useState([]);
 
-  /////////
-  const [tableDataSVT, setTableDataSVT] = useState([]);
 
-  //Pagination
-  const [svtPerPage, setSvtPerPage] = useState(7);
-  const [CsvtPerPage, setCSvtPerPage] = useState(1);
-  const numOfToTalPages = Math.ceil(tableDataSVT.data?.length / svtPerPage);
-  // const pages = [...Array(numOfToTalPages + 1).keys()].slice(1);
-  const indexOfLastSVT = CsvtPerPage * svtPerPage;
-  const indexOfFirstSVT = indexOfLastSVT - svtPerPage;
-  const visibleSVT = tableDataSVT.data?.slice(indexOfFirstSVT, indexOfLastSVT);
 
-  const changePage = ({ selected }) => {
-    setCSvtPerPage(selected + 1);
-  };
+  //buttons function
   const handleSubmit = (event) => {
     event.preventDefault();
     const movieIds = selected.map((movie) => movie.value);
@@ -118,12 +100,7 @@ const Calendar = () => {
       .then((res) => {
         setShowtimes(res.data);
       });
-    // console.log({
-    //   date: event.target[5].value,
-    //   movieIds: selected.map((movie) => movie.value),
-    //   cinemaId: event.target[2].value,
-    //   target: event.target,
-    // });
+
   };
 
   const handleAddShowTimes = (event) => {
@@ -134,12 +111,7 @@ const Calendar = () => {
           (showtime) => showtime.movie.id
         );
       }
-      // const showtimesCreate = {
-      //   date: showtimes.date,
-      //   cinemaId: showtimes.cinema.id,
-      //   roomShowtimes: roomShowtimes,
-      // };
-      // console.log(JSON.stringify(showtimesCreate));
+
       event.preventDefault();
   
       try {
@@ -148,14 +120,10 @@ const Calendar = () => {
           cinemaId: showtimes.cinema.id + "",
           roomShowtimes: roomShowtimes,
         } );
-
-
-          
-        
+   
       } catch (error) {
         console.error(error);
-        // console.log(selected);
-        // console.log(selected.map(genre => genre.value));
+
     }
 
     }
@@ -164,26 +132,9 @@ const Calendar = () => {
 
   useEffect(() => {
     loadProvince();
-    //loadCinema();
     loadMovie();
   }, []);
-  // useEffect(() => {
-  //  // data tao showtime
-  //   if (showtimes && Object.keys(showtimes?.showtimes).length > 0) {
-  //     const roomShowtimes = {};
-  //     for (let room of Object.keys(showtimes.showtimes)) {
-  //       roomShowtimes[room] = showtimes.showtimes[room].map(
-  //         (showtime) => showtime.movie.id
-  //       );
-  //     }
-  //     const showtimesCreate = {
-  //       date: showtimes.date,
-  //       cinemaId: showtimes.cinema.id,
-  //       roomShowtimes: roomShowtimes,
-  //     };
-  //     console.log(JSON.stringify(showtimesCreate));
-  //   }
-  // }, [showtimes]);
+
   ////////////
   return (
     <div>
@@ -211,7 +162,7 @@ const Calendar = () => {
                     <MenuItem value={province.id}>{province.name}</MenuItem>
                   ))}
               </Select>
-              <FormHelperText>Required</FormHelperText>
+              <FormHelperText>Yêu Cầu</FormHelperText>
             </FormControl>
 
             <FormControl required sx={{ m: 1, minWidth: 120 }} name="cinema">
@@ -230,13 +181,13 @@ const Calendar = () => {
                     <MenuItem value={cinema.id}>{cinema.name}</MenuItem>
                   ))}
               </Select>
-              <FormHelperText>Required</FormHelperText>
+              <FormHelperText>Yêu Cầu</FormHelperText>
             </FormControl>
 
-            <FormControl required sx={{ m: 1, minWidth: 120 }} name="movies">
-              <InputLabel id="demo-simple-select-required-label">
+            <FormControl required sx={{ m: 1, minWidth: 200 }} name="movies">
+              <label id="demo-simple-select-required-label">
                 Phim
-              </InputLabel>
+              </label>
 
               <MultiSelect
                 options={movie.map((mv) => {
@@ -247,9 +198,10 @@ const Calendar = () => {
                 })}
                 value={selected}
                 onChange={setSelected}
+                
               />
               
-              <FormHelperText>Required</FormHelperText>
+              <FormHelperText>Yêu Cầu</FormHelperText>
             </FormControl>
           </div>
           <div
@@ -298,16 +250,16 @@ const Calendar = () => {
               <TableHead>
                 <TableRow>
                   <TableCell className={styles.tableCell + " text-center"}>
-                    Rạp 1
+                    <b>Rạp 1</b>
                   </TableCell>{" "}
                   <TableCell className={styles.tableCell + " text-center"}>
-                    Rạp 2
+                  <b>Rạp 2</b>
                   </TableCell>{" "}
                   <TableCell className={styles.tableCell + " text-center"}>
-                    Rạp 3
+                  <b>Rạp 3</b>
                   </TableCell>{" "}
                   <TableCell className={styles.tableCell + " text-center"}>
-                    Rạp 4
+                  <b>Rạp 4</b>
                   </TableCell>{" "}
                 </TableRow>
               </TableHead>
@@ -324,39 +276,43 @@ const Calendar = () => {
                             (showtime) => (
                               <TableRow>
                                 <div
-                                  style={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    width: 300,
-                                  }}
+                               
+                                  className={styles.myTable}
                                 >
                                   <div
                                     style={{
                                       marginRight: 5,
                                     }}
+                                    className={styles.cellWithImg}
                                   >
                                     <img
                                       src={showtime.movie.image}
                                       alt=""
                                       width={50}
+                                      className={styles.cellImg}
                                     />
                                   </div>
                                   <div
                                     style={{ marginTop: "20px", width: 200 }}
+                                    className={styles.infos}
                                   >
-                                    <p>
-                                      Bắt đầu:
+                                    <div className={styles.info}>
+                                      Bắt đầu:  
+                                      <b>
                                       {new Date(
                                         showtime.start
                                       ).toLocaleTimeString()}
-                                    </p>
-                                    <p>
+                                      </b>
+                                    </div>
+                                    <div className={styles.info}>
                                       Kết thúc:
+                                      <b>
                                       {new Date(
                                         showtime.end
                                       ).toLocaleTimeString()}
-                                    </p>
-                                    <p>Phim: {showtime.movie.name}</p>
+                                      </b>
+                                    </div>
+                                    <div className={styles.info}>Phim: <b>{showtime.movie.name}</b></div>
                                   </div>
                                 </div>
                               </TableRow>
@@ -369,22 +325,7 @@ const Calendar = () => {
             </Table>
           </TableContainer>
 
-          <ReactPaginate
-            previousLabel={"Prev"}
-            nextLabel={"Next"}
-            pageCount={numOfToTalPages}
-            onPageChange={changePage}
-            containerClassName={styles.myContainerPagination}
-            pageClassName={styles.pageItem}
-            pageLinkClassName={styles.pageLink}
-            previousClassName={styles.pageItem}
-            previousLinkClassName={styles.pageLink}
-            nextClassName={styles.pageItem}
-            nextLinkClassName={styles.pageLink}
-            breakClassName={styles.pageItem}
-            breakLinkClassName={styles.pageLink}
-            activeClassName={styles.active}
-          />
+
         </div>
       </div>
     </div>
