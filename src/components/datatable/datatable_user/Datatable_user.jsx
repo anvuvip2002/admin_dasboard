@@ -1,7 +1,7 @@
 
 
 
-import { Link } from "react-router-dom";
+
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,9 +20,6 @@ import ReactPaginate from "react-paginate";
 
 const Datatable_user = () => {
  
-
-
-
   const [tableDataSVT, setTableDataSVT] = useState([]);
 
   //Pagination
@@ -73,9 +70,7 @@ const Datatable_user = () => {
       <div className={styles.datatable}>
         <div className={styles.datatableTitle}>
           <b>Danh Sách Người Dùng</b>
-          <Link to="/users/new" className={styles.link}>
-            Thêm Mới
-          </Link>
+         
         </div>
 
         <TableContainer component={Paper} className={styles.table}>
@@ -133,12 +128,7 @@ const Datatable_user = () => {
                   </TableCell>{' '}
                   <TableCell className={styles.tableCell + ' text-center'}>
                     <div className={styles.cellAction}>
-                      <Link
-                        to={`/serviceType/adjustServiceType/${tableDataSVT.svt_id}`}
-                        style={{ textDecoration: 'none' }}
-                      >
-                        <div className={styles.viewButton}>Edit</div>
-                      </Link>{' '}
+             
                       <Button
                         onClick={() => deleteSVT(tableDataSVT.svt_id)}
                         className={styles.deleteButton}
@@ -152,11 +142,7 @@ const Datatable_user = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        {/* <div style={{display: "flex", float:"right", marginRight:"15px", marginTop:"15px", cursor:"pointer"}}>
-        <span onclick={prevPage}>Prev</span>
-        <p>{pages.map(page => <span kry={page} onClick={() => setCSvtPerPage(page)}>{`  ${page}  `}</span>)}</p>
-        <span onclick={nextPage}>Next</span>
-        </div> */}
+
         <ReactPaginate
         previousLabel={"Prev"}
         nextLabel={"Next"}

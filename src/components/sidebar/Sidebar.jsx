@@ -1,12 +1,9 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import TheatersIcon from '@mui/icons-material/Theaters';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -69,10 +66,7 @@ const Sidebar = () => {
           
           <p className="title">Analys</p>
           
-          <li>
-            <InsertChartIcon className="icon" />
-            <span>Stats</span>
-          </li>
+      
           <li>
             <FeedbackIcon className="icon" />
             <span>Feedback</span>

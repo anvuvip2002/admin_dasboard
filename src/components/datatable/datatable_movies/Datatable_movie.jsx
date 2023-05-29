@@ -127,12 +127,12 @@ const Datatable_movie = () => {
                   </TableCell>{' '}
                   <TableCell className={styles.tableCell + ' text-center'}>
                     <div className={styles.cellAction}>
-                      <Link
+                      {/* <Link
                         to={`/serviceType/adjustServiceType/${tableDataSVT.svt_id}`}
                         style={{ textDecoration: 'none' }}
                       >
                         <div className={styles.viewButton}>Edit</div>
-                      </Link>{' '}
+                      </Link>{' '} */}
                       <Button
                         onClick={() => deleteSVT(tableDataSVT.svt_id)}
                         className={styles.deleteButton}
@@ -146,11 +146,7 @@ const Datatable_movie = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        {/* <div style={{display: "flex", float:"right", marginRight:"15px", marginTop:"15px", cursor:"pointer"}}>
-        <span onclick={prevPage}>Prev</span>
-        <p>{pages.map(page => <span kry={page} onClick={() => setCSvtPerPage(page)}>{`  ${page}  `}</span>)}</p>
-        <span onclick={nextPage}>Next</span>
-        </div> */}
+
         <ReactPaginate
         previousLabel={"Prev"}
         nextLabel={"Next"}
