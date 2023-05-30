@@ -16,11 +16,8 @@ import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 import React from "react";
 import EditCinemas from "./pages/cinema/EditCinemas";
 import NewCinemas from "./pages/cinema/NewCinemas";
-
-
 import List_order from "./pages/order/List_order";
 import Calendar from "./components/calendar/Calendar";
-import React from "react";
 import MakeCalendar from "./pages/calendars/makeCalendar";
 
 export const userRows = [];

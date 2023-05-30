@@ -65,11 +65,10 @@ export const cinemaColumns = [
 ];
   
   export let cinemaRows = [];  
-const fetchCinemaData = () => {
-  axios.get("http://20.214.254.141:3000/cinema")
+const fetchCinemaData = async () => {
+   await axios.get("http://20.214.254.141:3000/cinema")
     .then(response => {
       cinemaRows = response.data;
-      console.log(cinemaRows);
     })
     .catch(error => {
       console.error('Error fetching cinema data:', error);
