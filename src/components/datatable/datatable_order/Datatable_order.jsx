@@ -1,6 +1,6 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { orderColumns,orderRows } from "../../../datatablesource_order.js";
+import { orderColumns,orderRows } from "../../../datatablesource_orders.js";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -36,9 +36,9 @@ const Datatable_order = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
+        Order's Details
         <Link to="/users/new" className="link">
-          Add New
+          Details
         </Link>
       </div>
       <DataGrid
