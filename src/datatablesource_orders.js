@@ -3,7 +3,7 @@ export const orderColumns = [
     {
       field: "moviename",
       headerName: "Movie's name",
-      width: 320,
+      width: 300,
       renderCell: (params) => {
         return (
           <div className="cellWithImg">
