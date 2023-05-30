@@ -7,27 +7,16 @@ import { useState } from "react";
 const Datatable_order = () => {
   const [data, setData] = useState(orderRows);
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
 
-  const actionColumn = [
+  const statusColumn = [
     {
-      field: "action",
-      headerName: "Action",
-      width: 200,
+      field: "status",
+      headerName: "Status",
+      width: 110,
       renderCell: (params) => {
         return (
-          <div className="cellAction">
-            <Link to="/orders/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
+          <div className="cellStatus">
+              <div className="statusButton">Compelete</div>
           </div>
         );
       },
@@ -37,13 +26,11 @@ const Datatable_order = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Order's Details
-        <Link to="/orders/new" className="link">
-          
-        </Link>
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
+        columns={orderColumns.concat(statusColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
