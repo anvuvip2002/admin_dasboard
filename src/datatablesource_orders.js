@@ -3,7 +3,7 @@ export const orderColumns = [
     {
       field: "moviename",
       headerName: "Movie's name",
-      width: 230,
+      width: 330,
       renderCell: (params) => {
         return (
           <div className="cellWithImg">
@@ -27,7 +27,7 @@ export const orderColumns = [
     {
         field: "seat",
         headerName: "Seat",
-        width: 50,
+        width: 80,
     },
 
     {
@@ -39,26 +39,13 @@ export const orderColumns = [
     {
         field: "ciname",
         headerName: "Ciname's name",
-        width: 120,
+        width: 150,
     },
 
     {
         field: "price",
         headerName: "Price",
         width: 80,
-    },
-
-    {
-      field: "status",
-      headerName: "Status",
-      width: 100,
-      renderCell: (params) => {
-        return (
-          <div className={`cellWithStatus ${params.row.status}`}>
-            {params.row.status}
-          </div>
-        );
-      },
     },
   ];
   
@@ -68,7 +55,7 @@ export const orderColumns = [
       id: 1,
       moviename: "Doctor Strange",
       img: "https://cdn.galaxycine.vn/media/2022/4/27/300x450_1651029994834.jpg",
-      status: "waiting",
+      status: "completed",
       date: "11/02/2023",
       time: "17:00",
       seat: "E1",
@@ -81,7 +68,7 @@ export const orderColumns = [
       moviename: "Mario Maurer",
       img: "https://medianews.thieunien.vn/uploads/2023/03/07/5-bo-phim-hoat-hinh-duoc-mong-cho-nhat-2023-the-super-mario-dau-voi-ninja-rua_1678176663.jpg",
       date: "22/03/2023",
-      status: "waiting",
+      status: "completed",
       time: "20:00",
       seat: "H2",
       room: "R5",
@@ -93,7 +80,7 @@ export const orderColumns = [
       moviename: "Your Name",
       img: "https://upload.wikimedia.org/wikipedia/vi/b/b3/Your_Name_novel.jpg",
       date: "30/03/2023",
-      status: "cancelled",
+      status: "completed",
       time: "20:00",
       seat: "A4",
       room: "R3",
