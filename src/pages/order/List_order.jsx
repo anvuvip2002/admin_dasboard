@@ -1,7 +1,7 @@
 import "./order.scss"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
-import Datatable_order from "../../components/datatable/datatable_order/Datatable_order"
+import Datatable_order from "../../components/datatable/datatable_orders/Datatable_order"
 
 const List_order = () => {
   return (
