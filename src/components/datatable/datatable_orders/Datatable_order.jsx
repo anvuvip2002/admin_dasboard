@@ -16,7 +16,7 @@ const Datatable_order = () => {
       renderCell: (params) => {
         return (
           <div className="cellStatus">
-              <div className="statusButton">Compelete</div>
+              <div className="statusButton">Completed</div>
           </div>
         );
       },
