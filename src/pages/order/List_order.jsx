@@ -1,4 +1,4 @@
-import "./list_order.scss"
+import "./order.scss"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
 import Datatable_order from "../../components/datatable/datatable_orders/Datatable_order"
@@ -6,10 +6,10 @@ import Datatable_order from "../../components/datatable/datatable_orders/Datatab
 const List_order = () => {
   return (
     <div className="list">
-      <Sidebar/>
+      <Sidebar />
       <div className="listContainer">
-        <Navbar/>
-        <Datatable_order/>
+        <Navbar />
+        <Datatable_order />
       </div>
     </div>
   )

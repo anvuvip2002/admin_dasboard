@@ -3,7 +3,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 
 import Single from "./pages/single/Single";
-import New from "./pages/new/New";
+import NewMovie from "./pages/new/newMovie/newMovie";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { productInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
@@ -43,7 +43,7 @@ function App() {
               <Route path=":userId" element={<Single />} />
               <Route
                 path="new"
-                element={<New inputs={userInputs} title="Add New User" />}
+                element={<NewMovie inputs={userInputs} title="Add New User" />}
               />
             </Route>
 
@@ -51,14 +51,14 @@ function App() {
               <Route index element={<List_movie />} />
               <Route path=":productId" element={<Single />} />
               <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
+                path="newMovie"
+                element={<NewMovie title="Thêm Phim Mới" />}
               />
             </Route>
 
             <Route path="cinemas">
               <Route index element={<List_cinemas />} />
-              <Route path="new" element={<NewCinemas />} />
+              {/* <Route path="new" element={<NewCinemas />} /> */}
               <Route path=":id/edit" element={<EditCinemas />} />
             </Route>
 
@@ -73,6 +73,14 @@ function App() {
 
             <Route path="profile">
               <Route index element={<Profile />} />
+            </Route>
+            <Route path="orders">
+              <Route index element={<List_order />} />
+              <Route path=":userId" element={<Single />} />
+              {/* <Route
+                path="new"
+                element={<New inputs={userInputs} title="Order's Details" />}
+              /> */}
             </Route>
           </Route>
         </Routes>

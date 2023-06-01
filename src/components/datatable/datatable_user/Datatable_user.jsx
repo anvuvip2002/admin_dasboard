@@ -1,54 +1,166 @@
-import "./datatable.scss";
-import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../../datatablesource_users.js";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+
+
+
+
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import axios from 'axios';
+
+import { useState, useEffect } from 'react';
+
+import styles from './datatable_user.module.css';
+import Button from 'react-bootstrap/Button';
+import ReactPaginate from "react-paginate";
 
 const Datatable_user = () => {
-  const [data, setData] = useState(userRows);
+ 
+  const [tableDataSVT, setTableDataSVT] = useState([]);
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+  //Pagination
+  const [svtPerPage, setSvtPerPage] = useState(7)
+  const [CsvtPerPage, setCSvtPerPage] = useState(1)
+  const numOfToTalPages = Math.ceil(tableDataSVT.data?.length / svtPerPage);
+  // const pages = [...Array(numOfToTalPages + 1).keys()].slice(1);
+  const indexOfLastSVT = CsvtPerPage*svtPerPage;
+  const indexOfFirstSVT = indexOfLastSVT - svtPerPage;
+  const visibleSVT = tableDataSVT.data?.slice(indexOfFirstSVT, indexOfLastSVT)
+
+  
+
+  const changePage = ({ selected }) => {
+    setCSvtPerPage(selected + 1);
   };
 
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
-          </div>
-        );
-      },
-    },
-  ];
+
+  useEffect(() => {
+    loadSVT();
+  }, []);
+
+  const loadSVT = async () => {
+    axios
+      .get('http://20.214.254.141:3000/user')
+      .then((response) => {
+        setTableDataSVT(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  function deleteSVT(id) {
+    fetch(`http://localhost:3001/serviceType/svtid/${id}`, {
+      method: 'DELETE',
+    }).then((result) => {
+      result.json().then((resp) => {
+        console.warn(resp);
+      });
+    });
+    loadSVT();
+  }
+
   return (
-    <div className="datatable">
-      <div className="datatableTitle">
-        Add New User
-        <Link to="/users/new" className="link">
-          Add New
-        </Link>
-      </div>
-      <DataGrid
-        className="datagrid"
-        rows={data}
-        columns={userColumns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
-        checkboxSelection
+    <div className={styles.servicePage}>
+      <div className={styles.datatable}>
+        <div className={styles.datatableTitle}>
+          <b>Danh Sách Người Dùng</b>
+         
+        </div>
+
+        <TableContainer component={Paper} className={styles.table}>
+          <Table sx={{ minWidth: 1200 }} aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  STT
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Tên 
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Email
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  SDT
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Ngày Sinh
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Giới Tính
+                </TableCell>{' '}
+                <TableCell className={styles.tableCell + ' text-center'}>
+                  Lựa Chọn
+                  
+                </TableCell>{' '}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {visibleSVT?.length > 0 && visibleSVT?.map((tableDataSVT, index) => (
+                
+                <TableRow
+                  key={tableDataSVT.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {index + 1}
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'} style={{display:"flex"}}>
+                    {tableDataSVT.name}
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {tableDataSVT.email}
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {tableDataSVT.phone} 
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {tableDataSVT.birthDay} 
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {tableDataSVT.gender} 
+                  </TableCell>{' '}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    <div className={styles.cellAction}>
+             
+                      <Button
+                        onClick={() => deleteSVT(tableDataSVT.svt_id)}
+                        className={styles.deleteButton}
+                      >
+                        Delete
+                      </Button>{' '}
+                    </div>
+                  </TableCell>{' '}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <ReactPaginate
+        previousLabel={"Prev"}
+        nextLabel={"Next"}
+        pageCount={numOfToTalPages}
+        onPageChange={changePage}
+        containerClassName={styles.myContainerPagination}
+        pageClassName={styles.pageItem}
+        pageLinkClassName={styles.pageLink}
+        previousClassName={styles.pageItem}
+        previousLinkClassName={styles.pageLink} 
+        nextClassName={styles.pageItem}
+        nextLinkClassName={styles.pageLink}
+        breakClassName={styles.pageItem}
+        breakLinkClassName={styles.pageLink}
+        activeClassName={styles.active}
+       
       />
+      </div>
     </div>
   );
 };

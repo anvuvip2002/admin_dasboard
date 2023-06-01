@@ -1,9 +1,9 @@
 export const orderColumns = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "id", headerName: "ID", width: 20 },
     {
       field: "moviename",
       headerName: "Movie's name",
-      width: 230,
+      width: 300,
       renderCell: (params) => {
         return (
           <div className="cellWithImg">
@@ -16,18 +16,18 @@ export const orderColumns = [
     {
       field: "date",
       headerName: "Date",
-      width: 230,
+      width: 100,
     },
   
     {
       field: "time",
       headerName: "Time",
-      width: 100,
+      width: 80,
     },
     {
         field: "seat",
         headerName: "Seat",
-        width: 100,
+        width: 80,
     },
 
     {
@@ -39,26 +39,13 @@ export const orderColumns = [
     {
         field: "ciname",
         headerName: "Ciname's name",
-        width: 100,
+        width: 150,
     },
 
     {
         field: "price",
         headerName: "Price",
-        width: 100,
-    },
-
-    {
-      field: "status",
-      headerName: "Status",
-      width: 160,
-      renderCell: (params) => {
-        return (
-          <div className={`cellWithStatus ${params.row.status}`}>
-            {params.row.status}
-          </div>
-        );
-      },
+        width: 80,
     },
   ];
   
@@ -67,10 +54,11 @@ export const orderColumns = [
     {
       id: 1,
       moviename: "Doctor Strange",
-      img: "https://imtimes.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      status: "waiting",
+      img: "https://cdn.galaxycine.vn/media/2022/4/27/300x450_1651029994834.jpg",
+      status: "completed",
       date: "11/02/2023",
       time: "17:00",
+      seat: "E1",
       room: "R1",
       ciname: "CGV Tân Bình",
       price: 145000,
@@ -78,10 +66,11 @@ export const orderColumns = [
     {
       id: 2,
       moviename: "Mario Maurer",
-      img: "https://imtimes.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      img: "https://medianews.thieunien.vn/uploads/2023/03/07/5-bo-phim-hoat-hinh-duoc-mong-cho-nhat-2023-the-super-mario-dau-voi-ninja-rua_1678176663.jpg",
       date: "22/03/2023",
-      status: "waiting",
+      status: "completed",
       time: "20:00",
+      seat: "H2",
       room: "R5",
       ciname: "CGV Thủ Đức",
       price: 90000,
@@ -89,10 +78,11 @@ export const orderColumns = [
     {
       id: 3,
       moviename: "Your Name",
-      img: "https://imtimes.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      img: "https://upload.wikimedia.org/wikipedia/vi/b/b3/Your_Name_novel.jpg",
       date: "30/03/2023",
-      status: "cancelled",
+      status: "completed",
       time: "20:00",
+      seat: "A4",
       room: "R3",
       ciname: "CGV Thủ Đức",
       price: 139000,
@@ -100,10 +90,11 @@ export const orderColumns = [
     {
       id: 4,
       moviename: "Lật mặt 6",
-      img: "https://imtimes.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      img: "https://www.cgv.vn/media/catalog/product/cache/1/image/1800x/71252117777b696995f01934522c402d/l/m/lm6_2x3_layout.jpg",
       date: "10/04/2023",
       status: "completed",
       time: "15:00",
+      seat: "G3",
       room: "R2",
       ciname: "CGV Tân Bình",
       price: 120000,
@@ -111,10 +102,11 @@ export const orderColumns = [
     {
       id: 5,
       moviename: "Fast X",
-      img: "https://imtimes.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      img: "https://i.imgur.com//gr9KBOV.jpg",
       date: "30/04/2023",
       status: "completed",
       time: "22:00",
+      seat: "D9",
       room: "R2",
       ciname: "CGV Thủ Đức",
       price: 145000,

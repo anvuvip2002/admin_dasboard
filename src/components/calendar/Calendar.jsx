@@ -1,160 +1,334 @@
-import { useState } from "react";
-import { formatDate } from '@fullcalendar/core';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from "@fullcalendar/list";
-import { v4 as uuid } from "uuid";
+import * as React from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import styles from "./Calendar.module.css";
+import { makeStyles } from "@mui/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import axios from "axios";
+import { MultiSelect } from "react-multi-select-component";
 
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { tokens } from "../../theme";
+import { useState, useEffect } from "react";
+const useStyles = makeStyles({
+  paper: {
+    overflowX: "scroll",
+    width: "250px",
+    overflowY: "scroll",
+  },
+});
 
-
-const EventItem = ({ info }) => {
-  const { event } = info;
-  return (
-    <div>
-      <p>{event.title}</p>
-      <p>{event.extendedProps.cinema}</p>
-      {/* <p>{event.extendedProps.cinema}</p> */}
-    </div>
-  );
-};
 
 const Calendar = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [currentEvents, setCurrentEvents] = useState([]);
+  const classes = useStyles();
+  const MenuProps = {
+    autoFocus: false,
+  };
 
-  const handleDateClick = (selected) => {
-    const title = prompt("Please enter a movie for this date");
-    const cinemaName = prompt("Please enter a cinema for this movie");
-    const calendarApi = selected.view.calendar;
-    calendarApi.unselect();
+  const [showtimes, setShowtimes] = React.useState();
 
-    if (title) {
-      calendarApi.addEvent({
-        id:  uuid(),
-        title,
-        
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: selected.allDay,
-        extendedProps: {
-          cinema: cinemaName
 
-        },
+
+  //Province
+  const [province, setProvince] = useState();
+  const [provinceSelected, setProvinceSelected] = useState();
+
+  const loadProvince = async () => {
+    axios
+      .get("http://20.214.254.141:3000/province?filter=notnull")
+      .then((response) => {
+        setProvince(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    }
   };
 
-  const handleEventClick = (selected) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
-      )
-    ) {
-      selected.event.remove();
-    }
+
+  const handleChangeProvince = (event) => {
+    if (province.data.length === 0 || !province.data) return;
+    const curProvince = province?.data?.filter(
+      (item) => item.id === event.target.value
+    )[0];
+    setProvinceSelected(curProvince);
+  };
+  /////
+  //Cinema
+
+  const [listCinema, setListCinema] = React.useState("");
+  const handleChangeCinema = (event) => {
+    setListCinema(event.target.value);
   };
 
+  ///////
+  // Movie
+  const [movie, setMovie] = useState([]);
+
+  const loadMovie = async () => {
+    axios
+      .get("http://20.214.254.141:3000/movie")
+      .then((response) => {
+        setMovie(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const [selected, setSelected] = useState([]);
+
+
+
+  //buttons function
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const movieIds = selected.map((movie) => movie.value);
+    axios
+      .post("http://20.214.254.141:3000/showtime/generate", {
+        date: event.target[5].value,
+        movieIds: movieIds,
+        cinemaId: event.target[2].value,
+      })
+      .then((res) => {
+        setShowtimes(res.data);
+      });
+
+  };
+
+  const handleAddShowTimes = (event) => {
+    if (showtimes && Object.keys(showtimes?.showtimes).length > 0) {
+      const roomShowtimes = {};
+      for (let room of Object.keys(showtimes.showtimes)) {
+        roomShowtimes[room] = showtimes.showtimes[room].map(
+          (showtime) => showtime.movie.id
+        );
+      }
+
+      event.preventDefault();
+  
+      try {
+        const response = axios.post('http://20.214.254.141:3000/showtime', {
+          date: showtimes.date,
+          cinemaId: showtimes.cinema.id + "",
+          roomShowtimes: roomShowtimes,
+        } );
+   
+      } catch (error) {
+        console.error(error);
+
+    }
+
+    }
+    console.log("hihi")
+  }
+
+  useEffect(() => {
+    loadProvince();
+    loadMovie();
+  }, []);
+
+  ////////////
   return (
-    <Box m="20px">
-      {/* <Header title="Calendar" subtitle="Full Calendar Interactive Page" /> */}
-
-      <Box display="flex" justifyContent="space-between">
-        {/* CALENDAR SIDEBAR */}
-        <Box
-          flex="1 1 20%"
-          backgroundColor={colors.primary[400]}
-          p="15px"
-          borderRadius="4px"
-        >
-          <Typography variant="h5">Movies</Typography>
-          <List>
-            {currentEvents.map((event) => (
-              <ListItem
-                key={event.id}
-                sx={{
-                  backgroundColor: colors.greenAccent[500],
-                  margin: "10px 0",
-                  borderRadius: "2px",
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div style={{ display: "flex", margin: "20px" }}>
+          <div style={{ marginRight: "45px" }}>
+            <FormControl required sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-required-label">
+                Tỉnh
+              </InputLabel>
+              <Select
+                MenuProps={{
+                  ...MenuProps,
+                  classes: {
+                    paper: classes.paper,
+                  },
                 }}
+                labelId="demo-simple-select-required-label"
+                id="demo-simple-select-required"
+                label="listProvince *"
+                onChange={handleChangeProvince}
               >
-                <ListItemText
-                  primary={event.title}
-                  
-                  secondary={
-                    
-                    <Typography>
-                      
-                      {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                      
-                    </Typography>
-                  }
-                />
-                
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+                {province?.data?.length > 0 &&
+                  province?.data?.map((province, index) => (
+                    <MenuItem value={province.id}>{province.name}</MenuItem>
+                  ))}
+              </Select>
+              <FormHelperText>Yêu Cầu</FormHelperText>
+            </FormControl>
 
-        {/* CALENDAR */}
-        <Box flex="1 1 100%" ml="15px">
-          <FullCalendar
-            height="75vh"
-            // event={eventMovie}
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              interactionPlugin,
-              listPlugin,
-            ]}
-            headerToolbar={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-            }}
-            initialView="dayGridMonth"
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            select={handleDateClick}
-            eventClick={handleEventClick}
-            eventsSet={(events) => setCurrentEvents(events)} show only title
-            eventContent={(events) => <EventItem info={events} />}
-            initialEvents={[
-              {
-                id: "12315",
-                title: "All-day event",
-                date: "2022-09-14",
-                movie: "John Wick",
-                cinema: "C1"
-              },
-              {
-                id: "5123",
-                title: "Timed event",
-                date: "2023-09-28",
+            <FormControl required sx={{ m: 1, minWidth: 120 }} name="cinema">
+              <InputLabel id="demo-simple-select-required-label">
+                Rạp
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-required-label"
+                id="demo-simple-select-required"
+                maxMenuHeight={250}
+                label="listCinema *"
+                onChange={handleChangeCinema}
+              >
+                {provinceSelected?.cinemas?.length > 0 &&
+                  provinceSelected?.cinemas?.map((cinema, index) => (
+                    <MenuItem value={cinema.id}>{cinema.name}</MenuItem>
+                  ))}
+              </Select>
+              <FormHelperText>Yêu Cầu</FormHelperText>
+            </FormControl>
+
+            <FormControl required sx={{ m: 1, minWidth: 200 }} name="movies">
+              <label id="demo-simple-select-required-label">
+                Phim
+              </label>
+
+              <MultiSelect
+                options={movie.map((mv) => {
+                  return {
+                    label: mv.name,
+                    value: mv.id,
+                  };
+                })}
+                value={selected}
+                onChange={setSelected}
                 
-              },
-            ]}
-          />
-        </Box>
-      </Box>
-    </Box>
+              />
+              
+              <FormHelperText>Yêu Cầu</FormHelperText>
+            </FormControl>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              float: "right",
+            }}
+          >
+            <div className={styles.myDate}>
+              <label>Ngày Chiếu</label>
+              <input type="date" name="releaseDate" />
+            </div>
+            <div className={styles.buttonUpdate}>
+              <button
+                type="submit"
+                
+                className={styles.myButton}
+              >
+                Tạo
+              </button>
+              
+            </div>
+            
+          </div>
+        </div>
+      </form>
+      <div className={styles.buttonUpdate}>
+              <button
+                type="submit"
+                onClick={handleAddShowTimes}
+                className={styles.myButton}
+              >
+                Thêm
+              </button>
+              
+            </div> 
+      <div className={styles.servicePage}>
+        <div className={styles.datatable}>
+          <div className={styles.datatableTitle}>
+            <b>Danh Sách Lịch Chiếu Từng Rạp</b>
+          </div>
+
+          <TableContainer component={Paper} className={styles.table}>
+            <Table sx={{ minWidth: 650 }} aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell className={styles.tableCell + " text-center"}>
+                    <b>Rạp 1</b>
+                  </TableCell>{" "}
+                  <TableCell className={styles.tableCell + " text-center"}>
+                  <b>Rạp 2</b>
+                  </TableCell>{" "}
+                  <TableCell className={styles.tableCell + " text-center"}>
+                  <b>Rạp 3</b>
+                  </TableCell>{" "}
+                  <TableCell className={styles.tableCell + " text-center"}>
+                  <b>Rạp 4</b>
+                  </TableCell>{" "}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {showtimes &&
+                  Object.keys(showtimes.showtimes).map(
+                    (showtimeColumn, index) => (
+                      <TableCell
+                        key={index}
+                        className={styles.tableCell + " text-center"}
+                      >
+                        {showtimeColumn.length > 0 &&
+                          showtimes.showtimes[showtimeColumn].map(
+                            (showtime) => (
+                              <TableRow>
+                                <div
+                               
+                                  className={styles.myTable}
+                                >
+                                  <div
+                                    style={{
+                                      marginRight: 5,
+                                    }}
+                                    className={styles.cellWithImg}
+                                  >
+                                    <img
+                                      src={showtime.movie.image}
+                                      alt=""
+                                      width={50}
+                                      className={styles.cellImg}
+                                    />
+                                  </div>
+                                  <div
+                                    style={{ marginTop: "20px", width: 200 }}
+                                    className={styles.infos}
+                                  >
+                                    <div className={styles.info}>
+                                      Bắt đầu:  
+                                      <b>
+                                      {new Date(
+                                        showtime.start
+                                      ).toLocaleTimeString()}
+                                      </b>
+                                    </div>
+                                    <div className={styles.info}>
+                                      Kết thúc:
+                                      <b>
+                                      {new Date(
+                                        showtime.end
+                                      ).toLocaleTimeString()}
+                                      </b>
+                                    </div>
+                                    <div className={styles.info}>Phim: <b>{showtime.movie.name}</b></div>
+                                  </div>
+                                </div>
+                              </TableRow>
+                            )
+                          )}
+                      </TableCell>
+                    )
+                  )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+
+        </div>
+      </div>
+    </div>
   );
 };
 
