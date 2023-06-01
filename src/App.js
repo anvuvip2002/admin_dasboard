@@ -22,6 +22,7 @@ import Calendar from "./components/calendar/Calendar";
 import MakeCalendar from "./pages/calendars/makeCalendar";
 import Feedback from "./pages/feedback/feedback";
 import NewFeedBack from "./pages/feedback/NewFeedbacks";
+import Profile from "./pages/profile/profile";
 
 export const userRows = [];
 export const cinemaRows = [];
@@ -68,6 +69,10 @@ function App() {
             <Route path="feedbacks">
               <Route index element={<Feedback />} />
               <Route path="new" element={<NewFeedBack />} />
+            </Route>
+
+            <Route path="profile">
+              <Route index element={<Profile />} />
             </Route>
           </Route>
         </Routes>

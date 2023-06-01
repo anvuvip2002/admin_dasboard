@@ -68,7 +68,7 @@ const Sidebar = () => {
           </Link>
 
           <p className="title">Analys</p>
-          <Link to="/feedbacks" style={{ textDecoration: "none" }}>
+          <Link to="/stats" style={{ textDecoration: "none" }}>
             <li>
               <InsertChartIcon className="icon" />
               <span>Stats</span>
@@ -82,10 +82,12 @@ const Sidebar = () => {
           </Link>
 
           <p className="title">Options</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
+          <Link to="/profile" style={{ textDecoration: "none" }}>
+            <li>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Profile</span>
+            </li>
+          </Link>
           <li>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
