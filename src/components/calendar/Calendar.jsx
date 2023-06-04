@@ -42,7 +42,7 @@ const Calendar = () => {
 
   const loadProvince = async () => {
     axios
-      .get("http://20.214.254.141:3000/province?filter=notnull")
+      .get("https://uitcinema.devhungops.website/api/province?filter=notnull")
       .then((response) => {
         setProvince(response.data);
         console.log(response.data);
@@ -74,7 +74,7 @@ const Calendar = () => {
 
   const loadMovie = async () => {
     axios
-      .get("http://20.214.254.141:3000/movie")
+      .get("https://uitcinema.devhungops.website/api/movie")
       .then((response) => {
         setMovie(response.data);
         console.log(response.data);
@@ -92,7 +92,7 @@ const Calendar = () => {
     event.preventDefault();
     const movieIds = selected.map((movie) => movie.value);
     axios
-      .post("http://20.214.254.141:3000/showtime/generate", {
+      .post("https://uitcinema.devhungops.website/api/showtime/generate", {
         date: event.target[5].value,
         movieIds: movieIds,
         cinemaId: event.target[2].value,
@@ -115,7 +115,7 @@ const Calendar = () => {
       event.preventDefault();
   
       try {
-        const response = axios.post('http://20.214.254.141:3000/showtime', {
+        const response = axios.post('https://uitcinema.devhungops.website/api/showtime', {
           date: showtimes.date,
           cinemaId: showtimes.cinema.id + "",
           roomShowtimes: roomShowtimes,

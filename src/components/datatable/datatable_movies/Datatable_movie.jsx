@@ -45,7 +45,7 @@ const Datatable_movie = () => {
 
   const loadSVT = async () => {
     axios
-      .get('http://20.214.254.141:3000/movie')
+      .get('https://uitcinema.devhungops.website/api/movie')
       .then((response) => {
         setTableDataSVT(response.data);
         console.log(response.data);
@@ -56,10 +56,11 @@ const Datatable_movie = () => {
   };
 
   function deleteSVT(id) {
-    fetch(`http://20.214.254.141:3000/movie/${id}`, {
+    fetch(`https://uitcinema.devhungops.website/api/movie/${id}`, {
       method: 'DELETE',
     }).then((result) => {
       result.json().then((resp) => {
+        console.log(id);
         console.warn(resp);
       });
       loadSVT();
