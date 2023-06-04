@@ -1,3 +1,4 @@
+import React from "react";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 
@@ -13,12 +14,15 @@ import List_movie from "./pages/list/list_movies/List_movie";
 
 import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 
-
 import EditCinemas from "./pages/cinema/EditCinemas";
 import NewCinemas from "./pages/cinema/NewCinemas";
+
 import List_order from "./pages/order/List_order";
 import Calendar from "./components/calendar/Calendar";
 import MakeCalendar from "./pages/calendars/makeCalendar";
+import Feedback from "./pages/feedback/feedback";
+import NewFeedBack from "./pages/feedback/NewFeedbacks";
+import Profile from "./pages/profile/profile";
 
 export const userRows = [];
 export const cinemaRows = [];
@@ -26,11 +30,7 @@ export const cinemaRows = [];
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
-
-
-
   return (
-    
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
@@ -52,7 +52,7 @@ function App() {
               <Route path=":productId" element={<Single />} />
               <Route
                 path="newMovie"
-                element={<NewMovie  title="Thêm Phim Mới" />}
+                element={<NewMovie title="Thêm Phim Mới" />}
               />
             </Route>
 
@@ -64,8 +64,15 @@ function App() {
 
             <Route path="calendar">
               <Route index element={<MakeCalendar />} />
-             
-             
+            </Route>
+
+            <Route path="feedbacks">
+              <Route index element={<Feedback />} />
+              <Route path="new" element={<NewFeedBack />} />
+            </Route>
+
+            <Route path="profile">
+              <Route index element={<Profile />} />
             </Route>
             <Route path="orders">
               <Route index element={<List_order />} />
@@ -75,14 +82,11 @@ function App() {
                 element={<New inputs={userInputs} title="Order's Details" />}
               /> */}
             </Route>
-         
           </Route>
         </Routes>
       </BrowserRouter>
-
     </div>
   );
 }
 
 export default App;
-

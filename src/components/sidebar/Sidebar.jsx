@@ -3,11 +3,13 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import InsertChartIcon from "@mui/icons-material/InsertChart";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import TheatersIcon from '@mui/icons-material/Theaters';
+import TheatersIcon from "@mui/icons-material/Theaters";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import FeedbackIcon from '@mui/icons-material/Feedback';
+import FeedbackIcon from "@mui/icons-material/Feedback";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
@@ -26,9 +28,9 @@ const Sidebar = () => {
         <ul>
           <p className="title">MAIN</p>
           <li>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <DashboardIcon className="icon" />
-            <span>Dashboard</span>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <DashboardIcon className="icon" />
+              <span>Dashboard</span>
             </Link>
           </li>
           <p className="title">LISTS</p>
@@ -50,7 +52,7 @@ const Sidebar = () => {
               <span>Calendar</span>
             </li>
           </Link>
-       
+
           <Link to="/orders" style={{ textDecoration: "none" }}>
             <li>
               <CreditCardIcon className="icon" />
@@ -63,20 +65,28 @@ const Sidebar = () => {
               <span>Cinemas</span>
             </li>
           </Link>
-          
+
           <p className="title">Analys</p>
-          
-      
-          <li>
-            <FeedbackIcon className="icon" />
-            <span>Feedback</span>
-          </li>
-          
+          <Link to="/stats" style={{ textDecoration: "none" }}>
+            <li>
+              <InsertChartIcon className="icon" />
+              <span>Stats</span>
+            </li>
+          </Link>
+          <Link to="/feedbacks" style={{ textDecoration: "none" }}>
+            <li>
+              <FeedbackIcon className="icon" />
+              <span>Feedback</span>
+            </li>
+          </Link>
+
           <p className="title">Options</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
+          <Link to="/profile" style={{ textDecoration: "none" }}>
+            <li>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Profile</span>
+            </li>
+          </Link>
           <li>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
