@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Featured = () => {
+  var showMonth = new Date();
+  var displayLastMonth = showMonth.getMonth() - 1;
+  console.log(displayLastMonth);
   const [earning, setEarning] = useState([]);
   const loadEarning = async () => {
     axios
@@ -36,7 +39,7 @@ const Featured = () => {
         <div className="featuredChart">
           <CircularProgressbar value={70} text={"70%"} strokeWidth={5} />
         </div>
-        <p className="title">Doanh thu tháng trước</p>
+        <p className="title">Doanh thu tháng {displayLastMonth}</p>
         <p className="amount">$420</p>
         <p className="desc">
           Đây là doanh thu tháng trước. Không bao gồm tháng hiện tại.
