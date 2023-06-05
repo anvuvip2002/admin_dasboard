@@ -1,10 +1,12 @@
 import "./widget.scss";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import TheatersIcon from '@mui/icons-material/Theaters';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 const Widget = ({ type }) => {
   let data;
 
@@ -12,12 +14,76 @@ const Widget = ({ type }) => {
   const amount = 100;
   const diff = 20;
 
+//userNumber
+  const [userNumber, setUserNumber] = useState([]);
+  const loadUserNumber = async () => {
+    axios
+      .get("https://uitcinema.devhungops.website/api/statistics/countUser")
+      .then((response) => {
+        setUserNumber(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+//orders
+const [orderNumber, setOrderNumber] = useState([]);
+const loadUsOrderNumber = async () => {
+  axios
+    .get("https://uitcinema.devhungops.website/api/statistics/getCountTicket")
+    .then((response) => {
+      setOrderNumber(response.data);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+//cinemaNumbers
+const [cinemaNumber, setCinemaNumber] = useState([]);
+const loadCinemaNumber = async () => {
+  axios
+    .get("https://uitcinema.devhungops.website/api/statistics/getCountCinema")
+    .then((response) => {
+      setCinemaNumber(response.data);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+//earning 
+const [earning, setEarning] = useState([]);
+const loadEarning = async () => {
+  axios
+    .get("https://uitcinema.devhungops.website/api/statistics/getTotalAllTime")
+    .then((response) => {
+      setEarning(response.data);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+  useEffect(() => {
+    loadUserNumber();
+    loadCinemaNumber();
+    loadUsOrderNumber();
+    loadEarning();
+    
+  }, []);
   switch (type) {
     case "user":
       data = {
-        title: "USERS",
+        title: "Người dùng",
         isMoney: false,
-        link: "See all users",
+        link: "Xem người dùng",
+        directLink: "/users",
+        value: userNumber,
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -31,9 +97,11 @@ const Widget = ({ type }) => {
       break;
     case "order":
       data = {
-        title: "ORDERS",
+        title: "Đặt vé",
         isMoney: false,
-        link: "View all orders",
+        link: "Xem các vé",
+        directLink: "/orders",
+        value: orderNumber,
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -47,9 +115,11 @@ const Widget = ({ type }) => {
       break;
     case "earning":
       data = {
-        title: "EARNINGS",
+        title: "Doanh thu",
         isMoney: true,
-        link: "View net earnings",
+        link: "Kiểm tra",
+        directLink: "/orders",
+        value: earning,
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -58,13 +128,15 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "balance":
+    case "cinema":
       data = {
-        title: "BALANCE",
-        isMoney: true,
-        link: "See details",
+        title: "Rạp chiếu",
+        isMoney: false,
+        link: "Xem các rạp",
+        directLink: "/cinemas",
+        value: cinemaNumber,
         icon: (
-          <AccountBalanceWalletOutlinedIcon
+          <TheatersIcon
             className="icon"
             style={{
               backgroundColor: "rgba(128, 0, 128, 0.2)",
@@ -79,22 +151,21 @@ const Widget = ({ type }) => {
   }
 
   return (
+    
     <div className="widget">
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {amount}
+          {data.isMoney && "$"} {data.value}
         </span>
-        <span className="link">{data.link}</span>
+        <Link to={`${data.directLink}`}><span>{data.link}</span> </Link>
+        
       </div>
       <div className="right">
-        <div className="percentage positive">
-          <KeyboardArrowUpIcon />
-          {diff} %
-        </div>
         {data.icon}
       </div>
     </div>
+   
   );
 };
 
