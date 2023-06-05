@@ -34,7 +34,7 @@ const NewMovie = ({  title }) => {
         e.preventDefault();
   
       try {
-        const response = await axios.post('https://bookingticket.dohaizxc.tech/api/movie', {
+        const response = await axios.post('https://uitcinema.devhungops.website/api/movie', {
           name: e.target.name.value,
     
           image: e.target.image.value,
