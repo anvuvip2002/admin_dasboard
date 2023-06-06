@@ -5,36 +5,59 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cinemaRows } from "../../datatablesource_cinemas";
 import { provinceOptions } from "../../datatablesource_cinemas";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 const NewCinemas = () => {
+
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
-    const [addressUrl, setAddressUrl] = useState('');
+    const [address_Url, setAddressUrl] = useState('');
     const [province, setProvince] = useState(0);
     const [numRooms, setNumRooms] = useState(0);
     const [data, setData] = useState(cinemaRows);
 
-    const handleProvinceChange = (event) => {
-        // Retrieve the selected province object
-        const provinceId = event.target.value
-        setProvince(provinceId)
+    const navigate = useNavigate();
+    const navigateToMoviePage = () => {
+        navigate('/cinemas');
     };
-    const handleSubmit = async () => {
-        const newCinema = {
-            name: name,
-            address: address,
-            address_Url: addressUrl,
-            number_of_rooms: numRooms,
-            provinceId: parseInt(province)
-        };
-        await axios.post("https://uitcinema.devhungops.website/api/cinema", newCinema)
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching cinema data:', error);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post('https://uitcinema.devhungops.website/api/cinema', {
+                name: name,
+
+                address: address,
+
+                address_Url: address_Url,
+
+                number_of_rooms: parseInt(numRooms),
+
+                provinceId: parseInt(province),
             });
-    }
+            if(response.status=200)
+            {
+                const newCinema = {
+                    id: Math.max(...data.map(item => item.id))+1,
+                    name: name,
+                    address: address,
+                    address_Url: address_Url,
+                    number_of_rooms: numRooms,
+                }
+                data.push(newCinema);
+                setData(data);
+            }
+        } catch (error) {
+            console.error(error);
+            // console.log(selected);
+            // console.log(selected.map(genre => genre.value));
+        }
+
+        
+        navigateToMoviePage();
+        console.log();
+
+    };
     return (
         <div className="list">
             <Sidebar />
@@ -46,25 +69,25 @@ const NewCinemas = () => {
                             <tr>
                                 <td><label htmlFor="name">Name:</label>
                                 </td>
-                                <td><input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)} required />
+                                <td><input type="text" id="name" onChange={(event) => setName(event.target.value)} required />
                                 </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="address">Address:</label>
                                 </td>
-                                <td><input type="text" id="address" value={address} onChange={(event) => setAddress(event.target.value)} required />
+                                <td><input type="text" id="address" onChange={(event) => setAddress(event.target.value)} required />
                                 </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="addressUrl">Address URL:</label>
                                 </td>
-                                <td><input type="url" id="addressUrl" value={addressUrl} onChange={(event) => setAddressUrl(event.target.value)} required />
+                                <td><input type="url" id="addressUrl" onChange={(event) => setAddressUrl(event.target.value)} required />
                                 </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="province">Province:</label>
                                 </td>
-                                <td><select type="text" id="province" onChange={handleProvinceChange} required >
+                                <td><select type="text" id="province" onChange={(event) => setProvince(event.target.value)} required >
                                     <option value="0">Chọn tỉnh thành</option>
                                     <option value="54">An Giang</option>
                                     <option value="47">Bà Rịa - Vũng Tàu</option>
@@ -133,9 +156,9 @@ const NewCinemas = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <td><label htmlFor="numRooms">Number of Rooms:</label>
+                                <td><label htmlFor="number_of_rooms">Number of Rooms:</label>
                                 </td>
-                                <td><input type="number" id="numRooms" value={numRooms} onChange={(event) => setNumRooms(parseInt(event.target.value))} required />
+                                <td><input type="number" id="number_of_rooms" onChange={(event) => setNumRooms(event.target.value)} required />
                                 </td>
                             </tr>
                             {/* <tr>
@@ -151,7 +174,7 @@ const NewCinemas = () => {
                             </td>
                         </tr> */}
                             <tr>
-                                <td><a href="/cinema"><button className="submitButton" onClick={() => handleSubmit()}>Add Cinema</button>
+                                <td><a href="/cinema"><button className="submitButton" onClick={(e) => (handleSubmit) ? handleSubmit(e) : null} >Add Cinema</button>
                                 </a></td>
                             </tr>
                         </tbody>

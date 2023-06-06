@@ -4,21 +4,24 @@ import { DataGrid } from "@mui/x-data-grid";
 import { cinemaColumns } from "../../../datatablesource_cinemas.js";
 import { cinemaRows } from "../../../datatablesource_cinemas.js";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const Datatable_cinemas = () => {
   const [data, setData] = useState(cinemaRows);
-  
-  const handleAction = (id) => {
-    const index = data.findIndex((item) => item.id === id);
-    if (index !== -1) {
-      const confirmed = window.confirm("Are you sure you want to change the active status?");
-      if (confirmed) {
-        const newData = [...data];
-        newData[index].isActive = !newData[index].isActive;
-        setData(newData);
-      }
-    }
-  };
+  useEffect(() => {
+    setData(cinemaRows);
+  }, [cinemaRows]);
+  // const handleAction = (id) => {
+  //   const index = data.findIndex((item) => item.id === id);
+  //   if (index !== -1) {
+  //     const confirmed = window.confirm("Are you sure you want to change the active status?");
+  //     if (confirmed) {
+  //       const newData = [...data];
+  //       newData[index].isActive = !newData[index].isActive;
+  //       setData(newData);
+  //     }
+  //   }
+  // };
+
   // const provinceColumn = [
   //   {
   //     field: "province",
