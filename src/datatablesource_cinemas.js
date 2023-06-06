@@ -66,7 +66,9 @@ export const cinemaColumns = [
 
 export let cinemaRows = [];
 const fetchCinemaData = async () => {
-  let temp, temp2 = [];
+  if(cinemaRows.length<=0)
+  {
+    let temp, temp2 = [];
   await axios.get("https://uitcinema.devhungops.website/api/province?filter=notnull")
     .then(response => {
       temp = response.data.data;
@@ -81,18 +83,22 @@ const fetchCinemaData = async () => {
     .catch(error => {
       console.error('Error fetching cinema data:', error);
     });
+  }
 };
 fetchCinemaData();
 
 export let provinCinema = [];
 const fetchprovinCinema = async () => {
-  await axios.get("https://uitcinema.devhungops.website/api/province?filter=notnull")
+  if(provinCinema.length<=0)
+  {
+    await axios.get("https://uitcinema.devhungops.website/api/province?filter=notnull")
     .then(response => {
       provinCinema = response.data;
     })
     .catch(error => {
       console.error('Error fetching cinema data:', error);
     });
+  }
 };
 fetchprovinCinema();
 
