@@ -6,9 +6,8 @@ import { cinemaRows } from "../../../datatablesource_cinemas.js";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 const Datatable_cinemas = () => {
- 
   const [data, setData] = useState(cinemaRows);
-
+  
   const handleAction = (id) => {
     const index = data.findIndex((item) => item.id === id);
     if (index !== -1) {
@@ -20,20 +19,20 @@ const Datatable_cinemas = () => {
       }
     }
   };
-  const provinceColumn = [
-    {
-      field: "province",
-      headerName: "Province",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div>
-            {params.row.province.name}
-          </div>
-        );
-      },
-    },
-  ];
+  // const provinceColumn = [
+  //   {
+  //     field: "province",
+  //     headerName: "Province",
+  //     width: 200,
+  //     renderCell: (params) => {
+  //       return (
+  //         <div>
+  //           {params.row.province.name}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  // ];
   const actionColumn = [
     {
       field: "action",
@@ -62,7 +61,7 @@ const Datatable_cinemas = () => {
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={cinemaColumns.concat(provinceColumn,actionColumn)}
+        columns={cinemaColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         hideFooterRowCount

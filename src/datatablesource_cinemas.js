@@ -29,7 +29,7 @@ import axios from "axios";
 //       headerName: "Province",
 //       width: 150,
 //     },
-    
+
 //     {
 //       field: "showtimes",
 //       headerName: "Show time",
@@ -63,16 +63,36 @@ export const cinemaColumns = [
   },
   { field: "number_of_rooms", headerName: "Number of Rooms", width: 150 }
 ];
-  
-  export let cinemaRows = [];  
+
+export let cinemaRows = [];
 const fetchCinemaData = async () => {
-   await axios.get("http://20.214.254.141:3000/cinema")
+  let temp, temp2 = [];
+  await axios.get("https://uitcinema.devhungops.website/api/province?filter=notnull")
     .then(response => {
-      cinemaRows = response.data;
+      temp = response.data.data;
+      temp.forEach(element => {
+        temp2 = element.cinemas;
+        temp2.forEach(element2 => {
+          if(element2.deleteAt==null)
+            cinemaRows.push(element2)
+        })
+      });
     })
     .catch(error => {
       console.error('Error fetching cinema data:', error);
     });
 };
-
 fetchCinemaData();
+
+export let provinCinema = [];
+const fetchprovinCinema = async () => {
+  await axios.get("https://uitcinema.devhungops.website/api/province?filter=notnull")
+    .then(response => {
+      provinCinema = response.data;
+    })
+    .catch(error => {
+      console.error('Error fetching cinema data:', error);
+    });
+};
+fetchprovinCinema();
+
