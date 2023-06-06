@@ -34,7 +34,7 @@ const NewMovie = ({  title }) => {
         e.preventDefault();
   
       try {
-        const response = await axios.post('http://20.214.254.141:3000/movie', {
+        const response = await axios.post('https://uitcinema.devhungops.website/api/movie', {
           name: e.target.name.value,
     
           image: e.target.image.value,

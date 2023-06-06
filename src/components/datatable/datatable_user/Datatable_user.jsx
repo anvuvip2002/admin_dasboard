@@ -44,7 +44,7 @@ const Datatable_user = () => {
 
   const loadSVT = async () => {
     axios
-      .get('http://20.214.254.141:3000/user')
+      .get('https://uitcinema.devhungops.website/api/user')
       .then((response) => {
         setTableDataSVT(response.data);
         console.log(response.data);
@@ -54,15 +54,8 @@ const Datatable_user = () => {
       });
   };
 
-  function deleteSVT(id) {
-    fetch(`http://localhost:3001/serviceType/svtid/${id}`, {
-      method: 'DELETE',
-    }).then((result) => {
-      result.json().then((resp) => {
-        console.warn(resp);
-      });
-    });
-    loadSVT();
+  function lockAccount(id) {
+    
   }
 
   return (
@@ -130,10 +123,10 @@ const Datatable_user = () => {
                     <div className={styles.cellAction}>
              
                       <Button
-                        onClick={() => deleteSVT(tableDataSVT.svt_id)}
+                        onClick={() => lockAccount(tableDataSVT.svt_id)}
                         className={styles.deleteButton}
                       >
-                        Delete
+                        Khóa
                       </Button>{' '}
                     </div>
                   </TableCell>{' '}

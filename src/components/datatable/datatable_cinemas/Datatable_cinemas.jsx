@@ -1,7 +1,8 @@
 import "./datatable.scss";
 
 import { DataGrid } from "@mui/x-data-grid";
-import { cinemaRows,cinemaColumns } from "../../../datatablesource_cinemas.js";
+import { cinemaColumns } from "../../../datatablesource_cinemas.js";
+import { cinemaRows } from "../../../datatablesource_cinemas.js";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 const Datatable_cinemas = () => {
@@ -19,6 +20,20 @@ const Datatable_cinemas = () => {
       }
     }
   };
+  const provinceColumn = [
+    {
+      field: "province",
+      headerName: "Province",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div>
+            {params.row.province.name}
+          </div>
+        );
+      },
+    },
+  ];
   const actionColumn = [
     {
       field: "action",
@@ -27,7 +42,7 @@ const Datatable_cinemas = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <button className="activeButton" onClick={() => handleAction(params.row.id)} >{params.row.isActive ? "🔒": "🔓"}</button>
+            {/* <button className="activeButton" onClick={() => handleAction(params.row.id)} >{params.row.isActive ? "🔒": "🔓"}</button> */}
             <Link className="editButton" to={`${params.row.id}/edit`} style={{ textDecoration: "none" }}>
               Edit
             </Link>
@@ -47,7 +62,7 @@ const Datatable_cinemas = () => {
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={cinemaColumns.concat(actionColumn)}
+        columns={cinemaColumns.concat(provinceColumn,actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         hideFooterRowCount
