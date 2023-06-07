@@ -1,5 +1,4 @@
 import "./widget.scss";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import TheatersIcon from '@mui/icons-material/Theaters';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";

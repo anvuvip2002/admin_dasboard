@@ -89,14 +89,7 @@ const Sidebar = () => {
             </li>
           </Link>
 
-
-          <p className="title">Options</p>
-      
-
-
           <p className="title">Lựa Chọn</p>
-          
-          <Link to="/login" style={{ textDecoration: "none" }}>
 
           <li>
             <ExitToAppIcon className="icon" />
