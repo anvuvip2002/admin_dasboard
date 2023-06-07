@@ -16,6 +16,23 @@ import { useContext } from "react";
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
+
+  const logout = () => {
+    // code to logout the user and clear user data from state
+    fetch("https://uitcinema.devhungops.website/api/auth/logout", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        window.location.replace("/login");
+      })
+      .catch((err) => {
+        window.location.replace("/login");
+      });
+  };
   return (
     <div className="sidebar">
       <div className="top">
@@ -86,14 +103,12 @@ const Sidebar = () => {
               <AccountCircleOutlinedIcon className="icon" />
               <span>Profile</span>
             </li>
-          
           </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
+
           <li>
             <ExitToAppIcon className="icon" />
-            <span>Logout</span>
+            <span onClick={logout}>Logout</span>
           </li>
-          </Link>
         </ul>
       </div>
       <div className="bottom">
