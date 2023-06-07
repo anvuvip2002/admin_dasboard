@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 
@@ -29,15 +29,36 @@ export const cinemaRows = [];
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
+  const [state,setState] = useState(1)
+  useEffect(()=>{
+    fetch("https://uitcinema.devhungops.website/api/auth/status", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          setState(3)
+        } else {
+          setState(2)
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        return false;
+      });
 
-  return (
+  },[])
+  if(state == 1) return <></>
+  if(state == 2) return <Login />;
+  if(state == 3) return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-
             <Route path="users">
               <Route index element={<List_user />} />
               <Route path=":userId" element={<Single />} />
