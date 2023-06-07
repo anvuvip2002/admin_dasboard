@@ -7,17 +7,44 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const data = [
-  { month: 1, Total: 1200 },
-  { month: 2, Total: 2100 },
-  { month: 3, Total: 800 },
-  { month: 4, Total: 1600 },
-  { month: 5, Total: 900 },
-  { month: 6, Total: 1700 },
+  { month: 1, total: 0 },
+  { month: 2, total: 0 },
+  { month: 3, total: 800 },
+  { month: 4, total: 0 },
+  { month: 5, total: 0 },
+  { month: 6, total: 0 },
 ];
 
 const Chart = ({ aspect, title }) => {
+  var showYear = new Date();
+  var displayCurrentYear = showYear.getFullYear();
+  console.log(displayCurrentYear);
+  const [earning, setEarning] = useState([]);
+  const loadEarning = async () => {
+    axios
+      .get(`https://uitcinema.devhungops.website/api/statistics/getTotalEachMonth/${displayCurrentYear}`)
+      .then((response) => {
+        setEarning(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  
+  useEffect(() => {
+
+    loadEarning();
+    
+  }, []);
+
+
+
   return (
     <div className="chart">
       <div className="title">{title}</div>
@@ -39,7 +66,7 @@ const Chart = ({ aspect, title }) => {
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="Total"
+            dataKey="total"
             stroke="#8884d8"
             fillOpacity={1}
             fill="url(#total)"

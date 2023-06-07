@@ -15,14 +15,14 @@ import List_movie from "./pages/list/list_movies/List_movie";
 import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 
 import EditCinemas from "./pages/cinema/EditCinemas";
-import NewCinemas from "./pages/cinema/NewCinemas";
+
 
 import List_order from "./pages/order/List_order";
-import Calendar from "./components/calendar/Calendar";
+
 import MakeCalendar from "./pages/calendars/makeCalendar";
 import Feedback from "./pages/feedback/feedback";
 import NewFeedBack from "./pages/feedback/NewFeedbacks";
-import Profile from "./pages/profile/profile";
+
 
 export const userRows = [];
 export const cinemaRows = [];
@@ -62,10 +62,7 @@ function App() {
             <Route path="users">
               <Route index element={<List_user />} />
               <Route path=":userId" element={<Single />} />
-              <Route
-                path="new"
-                element={<NewMovie inputs={userInputs} title="Add New User" />}
-              />
+              
             </Route>
 
             <Route path="products">
@@ -92,9 +89,7 @@ function App() {
               <Route path="new" element={<NewFeedBack />} />
             </Route>
 
-            <Route path="profile">
-              <Route index element={<Profile />} />
-            </Route>
+         
             <Route path="login">
               <Route index element={<Login />} />
              
