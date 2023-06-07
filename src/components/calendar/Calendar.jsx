@@ -128,6 +128,7 @@ const Calendar = () => {
 
     }
     console.log("hihi")
+    alert("Thêm các lịch chiếu thành công !");
   }
 
   useEffect(() => {
