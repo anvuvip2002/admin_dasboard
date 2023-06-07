@@ -1,7 +1,7 @@
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import "./EditCinemas.scss";
-
+import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cinemaRows, provinCinema } from "../../datatablesource_cinemas";
@@ -9,15 +9,15 @@ import axios from "axios";
 const EditCinemas = () => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
-  const [addressUrl, setAddressUrl] = useState('');
-  const [provinceId, setProvince] = useState(0);
+  const [address_Url, setAddressUrl] = useState('');
+  const [province, setProvince] = useState(0);
   const [numRooms, setNumRooms] = useState(0);
   const [data, setData] = useState(cinemaRows);
   const [data2, setData2] = useState(provinCinema.data);
 
   const { id } = useParams();
   const cinema = data.find((item) => item.id == id);
-
+  const navigate = useNavigate();
   useEffect(() => {
     defaultValue();
   }, []);
@@ -52,28 +52,46 @@ const EditCinemas = () => {
   };
   const handleProvinceChange = (event) => {
     // Retrieve the selected province object
-    const provinceId = event.target.value
-    setProvince(provinceId)
+    setProvince(event.target.value)
   }
-  const handleSubmit = async () => {
-    const newCinema = {
-      name: name,
-      address: address,
-      address_Url: addressUrl,
-      number_of_rooms: parseInt(numRooms),
-      provinceId: parseInt(provinceId),
-      id: parseInt(id)
+  const navigateToMoviePage = () => {
+    navigate('/cinemas');
+};
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    try { 
+      const response = await axios.post('https://uitcinema.devhungops.website/api/cinema', {
+            name: name,
 
-    };
-    await axios.patch("https://uitcinema.devhungops.website/api/cinema/" + id, newCinema)
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching cinema data:', error);
-      });
-  }
+            address: address,
 
+            address_Url: address_Url,
+
+            number_of_rooms: parseInt(numRooms),
+
+            provinceId: parseInt(province),
+
+            id:parseInt(id),
+        });
+        if(response.status=200)
+        {
+          data.map(p =>
+            p.id == parseInt(id)
+              ? { ...p, name: name, address:address, address_Url:address_Url, number_of_rooms:numRooms }
+              : p
+          );
+          setData(data);
+        }
+        
+    } catch (error) {
+        console.error(error);
+        // console.log(selected);
+        // console.log(selected.map(genre => genre.value));
+    }
+    navigateToMoviePage();
+    console.log();
+
+};
   return (
     <div className="list">
       <Sidebar />
@@ -170,7 +188,7 @@ const EditCinemas = () => {
                 <td><input type="number" id="number_of_rooms" name="number_of_rooms" placeholder={cinema !== undefined ? cinema.number_of_rooms : ''} onChange={(event) => setNumRooms(event.target.value)} required /></td>
               </tr>
               <tr>
-                <td><button type="submit" className="submitButton" onClick={() => handleSubmit()}>Save Changes</button></td>
+                <td><button type="submit" className="submitButton" onClick={(e) => (handleSubmit) ? handleSubmit(e) : null}>Save Changes</button></td>
               </tr>
             </tbody>
           </table>
