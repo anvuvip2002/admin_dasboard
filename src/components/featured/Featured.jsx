@@ -57,7 +57,7 @@ const Featured = () => {
           <CircularProgressbar value={percentThisMonth} text={percentThisMonth.toString()+"%"} strokeWidth={5} />
         </div>
         <p className="title">Doanh thu tháng {displayCurrentMonth}</p>
-        <p className="amount">{earningThisMonth} VNĐ</p>
+        <p className="amount">{earningThisMonth?.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</p>
         <p className="desc">
           Đây là doanh thu tháng hiện tại. Không bao gồm tháng khác.
         </p>
@@ -66,7 +66,7 @@ const Featured = () => {
             <div className="itemTitle">Mục tiêu</div>
             <div className="itemResult positive">
              
-              <div className="resultAmount">{targetMoney} VNĐ</div>
+              <div className="resultAmount">{targetMoney?.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</div>
             </div>
           </div>
         
