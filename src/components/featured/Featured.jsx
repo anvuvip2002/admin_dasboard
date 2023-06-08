@@ -29,7 +29,8 @@ const Featured = () => {
     setEarningThisMonth(money);
     
     const percent = money*100/targetMoney;
-    setPercentThisMonth(percent);
+    const percentFinal = Math.round(percent * 100)/100
+    setPercentThisMonth(percentFinal);
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +54,7 @@ const Featured = () => {
       </div>
       <div className="bottom">
         <div className="featuredChart">
-          <CircularProgressbar value={percentThisMonth} text={percentThisMonth.toString()} strokeWidth={5} />
+          <CircularProgressbar value={percentThisMonth} text={percentThisMonth.toString()+"%"} strokeWidth={5} />
         </div>
         <p className="title">Doanh thu tháng {displayCurrentMonth}</p>
         <p className="amount">{earningThisMonth} VNĐ</p>

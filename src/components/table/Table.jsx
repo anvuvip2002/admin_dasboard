@@ -42,7 +42,7 @@ const List = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableDataSVT.map((row) => (
+          {tableDataSVT?.RecentTickets?.map((row) => (
             <TableRow key={row.id}>
               <TableCell className="tableCell">{row.id}</TableCell>
               <TableCell className="tableCell" style={{display:"flex"}}>
