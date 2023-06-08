@@ -1,5 +1,4 @@
 import "./widget.scss";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import TheatersIcon from '@mui/icons-material/Theaters';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -119,7 +118,7 @@ const loadEarning = async () => {
         isMoney: true,
         link: "Kiểm tra",
         directLink: "/orders",
-        value: earning,
+        value: earning + " VND",
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -156,7 +155,7 @@ const loadEarning = async () => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {data.value}
+          {data.isMoney} {data.value}
         </span>
         <Link to={`${data.directLink}`}><span>{data.link}</span> </Link>
         
