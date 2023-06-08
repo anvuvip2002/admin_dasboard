@@ -52,10 +52,10 @@ const List = () => {
               </div>
                 {row.movieName}
                 </TableCell>
-              <TableCell className="tableCell">{row.seat}</TableCell>
+              <TableCell className="tableCell">{row.seat.join(", ")}</TableCell>
               <TableCell className="tableCell">{row.paymentMethod}</TableCell>
               <TableCell className="tableCell">{row.cinemaName}</TableCell>
-              <TableCell className="tableCell">{row.totalTicket} VNĐ</TableCell>
+              <TableCell className="tableCell">{row.totalTicket?.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</TableCell>
               <TableCell className="tableCell">{row.code}</TableCell>
               <TableCell className="tableCell">{row.createdAt}</TableCell>
             </TableRow>

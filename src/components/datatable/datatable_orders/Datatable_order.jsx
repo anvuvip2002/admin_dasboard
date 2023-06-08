@@ -73,12 +73,12 @@ const Datatable_order = () => {
                 <TableCell className={styles.tableCell + ' text-center'}>
                   Tiền vé
                 </TableCell>{' '}
-                {/* <TableCell className={styles.tableCell + ' text-center'}>
+                <TableCell className={styles.tableCell + ' text-center'}>
                   Tiền đồ ăn
                 </TableCell>{' '}
                 <TableCell className={styles.tableCell + ' text-center'}>
                   Tổng tiền hóa đơn
-                </TableCell>{' '} */}
+                </TableCell>{' '}
                 <TableCell className={styles.tableCell + ' text-center'}>
                   Phương thức thanh toán
                 </TableCell>{' '}
@@ -101,20 +101,17 @@ const Datatable_order = () => {
                     {tableDataTicket.movieName}
                   </TableCell>{' '}
                   <TableCell className={styles.tableCell + ' text-center'}>
-                    {tableDataTicket.cinameName}
+                    {tableDataTicket.seat.join(", ")}
                   </TableCell>{' '}
                   <TableCell className={styles.tableCell + ' text-center'}>
-                    {tableDataTicket.seat}
+                    {tableDataTicket.totalTicket?.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
                   </TableCell>{' '}
                   <TableCell className={styles.tableCell + ' text-center'}>
-                    {tableDataTicket.totalTicket} 
+                    {tableDataTicket.totalFood?.toLocaleString('vi', {style : 'currency', currency : 'VND'})} 
                   </TableCell>{' '}
-                  {/* <TableCell className={styles.tableCell + ' text-center'}>
-                    {tableDataTicket.foods["price"]} 
-                  </TableCell>{' '} */}
-                  {/* <TableCell className={styles.tableCell + ' text-center'}>
-                    {tableDataTicket.totalTicket} + {tableDataTicket.foods["price"]}
-                  </TableCell>{' '} */}
+                  <TableCell className={styles.tableCell + ' text-center'}>
+                    {(tableDataTicket.totalTicket + tableDataTicket.totalFood)?.toLocaleString('vi', {style : 'currency', currency : 'VND'})} 
+                  </TableCell>{' '}
                   <TableCell className={styles.tableCell + ' text-center'}>
                     {tableDataTicket.paymentMethod} 
                   </TableCell>{' '}

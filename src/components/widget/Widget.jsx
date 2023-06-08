@@ -115,7 +115,7 @@ const loadEarning = async () => {
         isMoney: true,
         link: "Kiểm tra",
         directLink: "/orders",
-        value: earning + " VND".TotalAllTime,
+        value: earning.TotalAllTime?.toLocaleString('vi', {style : 'currency', currency : 'VND'}),
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
