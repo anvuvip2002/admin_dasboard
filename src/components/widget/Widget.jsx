@@ -1,5 +1,4 @@
 import "./widget.scss";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import TheatersIcon from '@mui/icons-material/Theaters';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -10,10 +9,6 @@ import { Link } from "react-router-dom";
 const Widget = ({ type }) => {
   let data;
 
-  //temporary
-  const amount = 100;
-  const diff = 20;
-
 //userNumber
   const [userNumber, setUserNumber] = useState([]);
   const loadUserNumber = async () => {
@@ -21,7 +16,7 @@ const Widget = ({ type }) => {
       .get("https://uitcinema.devhungops.website/api/statistics/countUser")
       .then((response) => {
         setUserNumber(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -35,7 +30,7 @@ const loadUsOrderNumber = async () => {
     .get("https://uitcinema.devhungops.website/api/statistics/getCountTicket")
     .then((response) => {
       setOrderNumber(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     })
     .catch((error) => {
       console.log(error);
@@ -49,7 +44,7 @@ const loadCinemaNumber = async () => {
     .get("https://uitcinema.devhungops.website/api/statistics/getCountCinema")
     .then((response) => {
       setCinemaNumber(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     })
     .catch((error) => {
       console.log(error);
