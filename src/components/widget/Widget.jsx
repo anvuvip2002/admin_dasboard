@@ -7,11 +7,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const Widget = ({ type }) => {
+  
   let data;
-
-  //temporary
-  const amount = 100;
-  const diff = 20;
 
 //userNumber
   const [userNumber, setUserNumber] = useState([]);
@@ -20,7 +17,7 @@ const Widget = ({ type }) => {
       .get("https://uitcinema.devhungops.website/api/statistics/countUser")
       .then((response) => {
         setUserNumber(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -34,7 +31,7 @@ const loadUsOrderNumber = async () => {
     .get("https://uitcinema.devhungops.website/api/statistics/getCountTicket")
     .then((response) => {
       setOrderNumber(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     })
     .catch((error) => {
       console.log(error);
@@ -48,7 +45,7 @@ const loadCinemaNumber = async () => {
     .get("https://uitcinema.devhungops.website/api/statistics/getCountCinema")
     .then((response) => {
       setCinemaNumber(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     })
     .catch((error) => {
       console.log(error);
@@ -82,7 +79,7 @@ const loadEarning = async () => {
         isMoney: false,
         link: "Xem người dùng",
         directLink: "/users",
-        value: userNumber,
+        value: userNumber.CountUser,
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -100,7 +97,7 @@ const loadEarning = async () => {
         isMoney: false,
         link: "Xem các vé",
         directLink: "/orders",
-        value: orderNumber,
+        value: orderNumber.CountTicket,
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -118,7 +115,7 @@ const loadEarning = async () => {
         isMoney: true,
         link: "Kiểm tra",
         directLink: "/orders",
-        value: earning + " VND",
+        value: earning + " VND".TotalAllTime,
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -133,7 +130,7 @@ const loadEarning = async () => {
         isMoney: false,
         link: "Xem các rạp",
         directLink: "/cinemas",
-        value: cinemaNumber,
+        value: cinemaNumber.CountCinema,
         icon: (
           <TheatersIcon
             className="icon"

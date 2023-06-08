@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 
@@ -15,36 +15,54 @@ import List_movie from "./pages/list/list_movies/List_movie";
 import List_cinemas from "./pages/list/list_cinemas/List_cinemas";
 
 import EditCinemas from "./pages/cinema/EditCinemas";
-import NewCinemas from "./pages/cinema/NewCinemas";
+
 
 import List_order from "./pages/order/List_order";
-import Calendar from "./components/calendar/Calendar";
+
 import MakeCalendar from "./pages/calendars/makeCalendar";
 import Feedback from "./pages/feedback/feedback";
 import NewFeedBack from "./pages/feedback/NewFeedbacks";
-import Profile from "./pages/profile/profile";
+
 
 export const userRows = [];
 export const cinemaRows = [];
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
+  const [state,setState] = useState(1)
+  useEffect(()=>{
+    fetch("https://uitcinema.devhungops.website/api/auth/status", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          setState(3)
+        } else {
+          setState(2)
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        return false;
+      });
 
-  return (
+  },[])
+  if(state == 1) return <></>
+  if(state == 2) return <Login />;
+  if(state == 3) return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-
             <Route path="users">
               <Route index element={<List_user />} />
               <Route path=":userId" element={<Single />} />
-              <Route
-                path="new"
-                element={<NewMovie inputs={userInputs} title="Add New User" />}
-              />
+              
             </Route>
 
             <Route path="products">
@@ -71,9 +89,7 @@ function App() {
               <Route path="new" element={<NewFeedBack />} />
             </Route>
 
-            <Route path="profile">
-              <Route index element={<Profile />} />
-            </Route>
+         
             <Route path="login">
               <Route index element={<Login />} />
              
