@@ -78,7 +78,7 @@ const loadEarning = async () => {
         isMoney: false,
         link: "Xem người dùng",
         directLink: "/users",
-        value: userNumber,
+        value: userNumber.CountUser,
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -96,7 +96,7 @@ const loadEarning = async () => {
         isMoney: false,
         link: "Xem các vé",
         directLink: "/orders",
-        value: orderNumber,
+        value: orderNumber.CountTicket,
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -114,7 +114,7 @@ const loadEarning = async () => {
         isMoney: true,
         link: "Kiểm tra",
         directLink: "/orders",
-        value: earning,
+        value: earning.TotalAllTime,
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -129,7 +129,7 @@ const loadEarning = async () => {
         isMoney: false,
         link: "Xem các rạp",
         directLink: "/cinemas",
-        value: cinemaNumber,
+        value: cinemaNumber.CountCinema,
         icon: (
           <TheatersIcon
             className="icon"
