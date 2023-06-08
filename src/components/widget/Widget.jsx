@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const Widget = ({ type }) => {
+  
   let data;
 
 //userNumber
@@ -114,7 +115,7 @@ const loadEarning = async () => {
         isMoney: true,
         link: "Kiểm tra",
         directLink: "/orders",
-        value: earning.TotalAllTime,
+        value: earning.TotalAllTime?.toLocaleString('vi', {style : 'currency', currency : 'VND'}),
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -151,7 +152,7 @@ const loadEarning = async () => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {data.value}
+          {data.isMoney} {data.value}
         </span>
         <Link to={`${data.directLink}`}><span>{data.link}</span> </Link>
         
