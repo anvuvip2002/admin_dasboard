@@ -40,7 +40,7 @@ const Datatable_user = () => {
 
   const loadSVT = async () => {
     axios
-      .get('https://uitcinema.devhungops.website/api/user')
+      .get('https://uitcinema.devhungops.website/api/user?limit=1000')
       .then((response) => {
         setTableDataSVT(response.data);
         console.log(response.data);
