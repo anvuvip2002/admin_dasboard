@@ -10,7 +10,7 @@ import axios from 'axios';
 
 import { useState, useEffect } from 'react';
 
-import styles from './datatable.css';
+import styles from './datatable.module.css';
 import Button from 'react-bootstrap/Button';
 import ReactPaginate from "react-paginate";
 
