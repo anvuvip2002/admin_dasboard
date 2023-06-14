@@ -69,7 +69,7 @@ const fetchCinemaData = async () => {
   if(cinemaRows.length<=0)
   {
     let temp, temp2 = [];
-  await axios.get("https://uitcinema.devhungops.website/api/province?filter=notnull")
+  await axios.get("https://uitcinema.devhungops.website/province")
     .then(response => {
       temp = response.data.data;
       temp.forEach(element => {
@@ -91,7 +91,7 @@ export let provinCinema = [];
 const fetchprovinCinema = async () => {
   if(provinCinema.length<=0)
   {
-    await axios.get("https://uitcinema.devhungops.website/api/province?filter=notnull")
+    await axios.get("https://uitcinema.devhungops.website/api/user")
     .then(response => {
       provinCinema = response.data;
     })

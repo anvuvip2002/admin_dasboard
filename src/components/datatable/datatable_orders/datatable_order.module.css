@@ -4,6 +4,7 @@
     margin-left: 20px;
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
 }
+
 .datatable .datatableTitle {
     width: 100%;
     font-size: 24px;
@@ -13,16 +14,7 @@
     align-items: center;
     justify-content: space-between;
 }
-/* .datatable .datatableTitle .link {
-    text-decoration: none;
-    color: green;
-    font-size: 16px;
-    font-weight: 400;
-    border: 1px solid green;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-} */
+
 .table .cellWrapper {
     display: flex;
     align-items: center;
@@ -39,7 +31,7 @@
     display: flex;
     padding: 10px;
     color: rgb(62, 3, 117);
-    
+    float: right;
 }
 
 .pageItem{
