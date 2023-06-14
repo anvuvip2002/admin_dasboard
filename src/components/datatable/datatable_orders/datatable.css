@@ -27,6 +27,14 @@
     gap: 5px;
 }
 
+.table .cellAction button {
+    background-color: rgb(4, 126, 45);
+    border: none;
+    cursor: not-allowed;
+}
+
+
+
 .myContainerPagination{
     display: flex;
     padding: 10px;
@@ -40,4 +48,5 @@
     cursor: pointer;
     text-decoration: none;
     float: right;
+    list-style-type: none;
 }
